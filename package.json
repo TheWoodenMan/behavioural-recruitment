@@ -1,0 +1,19 @@
+{
+  "name": "behavioural-recruitment",
+  "version": "1.0.0",
+  "description": "a basic app that builds a simple behavioural recruitment interview template for interviewers or interviewees",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheWoodenMan/behavioural-recruitment.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TheWoodenMan/behavioural-recruitment/issues"
+  },
+  "homepage": "https://github.com/TheWoodenMan/behavioural-recruitment#readme"
+}
