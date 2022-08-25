@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 let mongoose;
 require("dotenv").config();
+const bodyParser = require("body-parser");
 
 try {
 	mongoose = require("mongoose");
@@ -22,6 +23,12 @@ try {
 } catch {
 	console.log("Could not connect");
 }
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static("public"));
+
+// *************** API Event Listeners ****************888
 
 app.get("/", (req, res) => {
 	res.sendFile(__dirname + "/index.html");
@@ -45,6 +52,33 @@ app.get("/random", (req, res) => {
 	res.json(questions[questionID].question);
 });
 
+// ************** DB Commands *******************
+
+app.get("/addquestion", function (req, res, next) {
+	// in case of incorrect function use wait timeout then respond
+	let t = setTimeout(() => {
+		next({ message: "timeout" });
+	}, TIMEOUT);
+	createAndSaveQuestion(function (err, data) {
+		clearTimeout(t);
+		if (err) {
+			return next(err);
+		}
+		if (!data) {
+			console.log("Missing `done()` argument");
+			return next({ message: "Missing callback argument" });
+		}
+		Question.findById(data._id, function (err, question) {
+			if (err) {
+				return next(err);
+			}
+			res.json(question);
+		});
+	});
+});
+
+// ************* Mongoose Configuration ********************
+
 const questionSchema = new Schema({
 	_id: Number,
 	question: String,
@@ -53,7 +87,31 @@ const questionSchema = new Schema({
 	values: [String],
 });
 
-module.exports = mongoose.model("Question", questionSchema);
+// compiled model
+const Question = mongoose.model("Question", questionSchema);
+
+// module.exports = mongoose.model("Question", questionSchema);
+
+// ******************* Mongoose Functions **************************
+
+// function to create and save a new Person
+
+const createAndSaveQuestion = (body) => {
+	// create a new document instance using the Person model constructor
+	const question = new Question({
+		_id: body._id,
+		question: body.question,
+		answer: body.answer,
+		answered: body.answered,
+		values: body.values,
+	});
+
+	// call the method document.save() on the returned document instance
+	question.save(function (err, data) {
+		if (err) return console.error(err);
+		done(null, data);
+	});
+};
 
 let questions = [
 	{
@@ -854,14 +912,14 @@ let questions = [
 	{
 		"_id": 102,
 		"question":
-			"What are your KPIs? Can you tell me about when you last failed to achieve your targets?",
+			"What where your key objectives on your last team? Can you tell me about when you last failed to achieve your targets?",
 		"answer": "answer",
 		"answered": "FALSE",
 		"values": [],
 	},
 	{
 		"_id": 103,
-		"question": "What has been you biggest accomplishment?",
+		"question": "What has been your biggest accomplishment?",
 		"answer": "answer",
 		"answered": "FALSE",
 		"values": [],
@@ -877,7 +935,7 @@ let questions = [
 	{
 		"_id": 105,
 		"question":
-			"When was the last time a colleague came to you with a problem?",
+			"When was the last time you had a problem you couldn't solve on your own?",
 		"answer": "answer",
 		"answered": "FALSE",
 		"values": [],
@@ -921,7 +979,7 @@ let questions = [
 	{
 		"_id": 111,
 		"question":
-			"Can you tell us about a time where your working environment was detrimental to performance?",
+			"Can you tell us about a time where the working environment was detrimental to performance?",
 		"answer": "answer",
 		"answered": "FALSE",
 		"values": [],
