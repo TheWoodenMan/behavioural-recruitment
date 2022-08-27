@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const MongoClient = require("mongodb").MongoClient;
+ObjectId = require("mongodb").ObjectId;
 require("dotenv").config();
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -47,20 +48,46 @@ MongoClient.connect(
 				.catch((error) => console.error(error));
 		});
 
-		app.get("/api/:questionID", (req, res) => {
-			const questionID = req.params.questionID.toLowerCase();
-			if (questions[questionID]) {
-				res.json(questions[questionID].question);
-			} else {
-				res.json(questions[0]);
-			}
+		app.get("/api/id/:id", (req, res) => {
+			const id = req.params.id;
+			// questions.find({id: values})
+			questions
+				.find({ "_id": ObjectId(`${id}`) })
+				.toArray()
+				.then((results) => {
+					console.log(`{ _id : ObjectID(${id}) }`);
+					console.log(results);
+					res.json(results);
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		});
+
+		app.get("/api/values/:value", (req, res) => {
+			const value = req.params.value.toLowerCase();
+			questions
+				.find({ "values": { $all: [`${value}`] } })
+				.toArray()
+				.then((results) => {
+					console.log(results);
+					res.json(results);
+				})
+				.catch((err) => {
+					console.log(err);
+				});
 		});
 
 		app.get("/random", (req, res) => {
-			let randQuestion = questions.aggregate([{ $sample: { size: 1 } }]);
-
-			console.log(randQuestion);
-			res.json(randQuestion);
+			questions
+				.aggregate([{ $sample: { size: 1 } }])
+				.then((results) => {
+					console.log(results);
+					res.json(results.question);
+				})
+				.catch((err) => {
+					console.log(err);
+				});
 		});
 	})
 	.catch((err) => console.log(err));
