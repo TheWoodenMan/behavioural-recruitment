@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
 const MongoClient = require("mongodb").MongoClient;
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 ObjectId = require("mongodb").ObjectId;
 require("dotenv").config();
 const bodyParser = require("body-parser");
@@ -18,7 +20,19 @@ let db,
 	dbConnectorStr = process.env.MONGO_URI,
 	dbName = "questions";
 
+// ************** mongoose settings *************
+
+const questionSchema = new Schema({
+	question: String,
+	answer: String,
+	answered: Boolean,
+	values: [String],
+});
+
+const Question = mongoose.model("Question", questionSchema);
+
 // ***************** mongodb connection **************
+// mongoose.connect(
 MongoClient.connect(
 	dbConnectorStr,
 	{ useUnifiedTopology: true }
@@ -42,12 +56,33 @@ MongoClient.connect(
 			questions
 				.insertOne(question)
 				.then((res) => {
-					console.log(`New Question ${question.question} added`);
+					console.log(`New Question added:`, "/n", `${question.question}`);
+					console.log(question);
+					res.send({
+						questionAdded: true,
+					});
+				})
+				.catch((error) => console.error(error));
+		});
+
+		app.post("/bulkaddquestion", (req, res) => {
+			const body = req.body;
+			const question = {
+				question: body.question,
+				answer: body.answer,
+				answered: body.answered,
+				values: body.values,
+			};
+			questions
+				.insertOne(question)
+				.then((res) => {
+					console.log(`New Question added:`, "/n", `${question.question}`);
 					res.json({ response: "question added" });
 				})
 				.catch((error) => console.error(error));
 		});
 
+		// searches the db by id number and displays the matching document.
 		app.get("/api/id/:id", (req, res) => {
 			const id = req.params.id;
 			// questions.find({id: values})
@@ -64,6 +99,8 @@ MongoClient.connect(
 				});
 		});
 
+		// searches the db values arrays and displays each full record that matches
+		// the leadership value search string
 		app.get("/api/values/:value", (req, res) => {
 			const value = req.params.value.toLowerCase();
 			questions
@@ -78,12 +115,21 @@ MongoClient.connect(
 				});
 		});
 
+		// Gets a random document from the db and returns only the question
 		app.get("/random", (req, res) => {
 			questions
-				.aggregate([{ $sample: { size: 1 } }])
+				// pick one record at random and add to the aggregate pipeline
+				.aggregate([
+					{
+						$sample: {
+							size: 1,
+						},
+					},
+				])
+				.toArray()
 				.then((results) => {
 					console.log(results);
-					res.json(results.question);
+					res.json(results[0]["question"]);
 				})
 				.catch((err) => {
 					console.log(err);
@@ -92,7 +138,7 @@ MongoClient.connect(
 	})
 	.catch((err) => console.log(err));
 
-// *************** API Event Listeners ****************888
+// *************** API Event Listeners *******************
 
 app.get("/", (req, res) => {
 	res.sendFile(__dirname + "/index.html");
@@ -102,20 +148,113 @@ app.get("/public", (req, res) => {
 	res.sendFile(__dirname + "/public");
 });
 
+let valuesArray = [
+	"accountability",
+	"action orientation",
+	"adaptability",
+	"analytical",
+	"approachability",
+	"attentive",
+	"belonging",
+	"boldness",
+	"care",
+	"charity",
+	"coaching",
+	"collaboration",
+	"commitment",
+	"communication",
+	"community",
+	"composure",
+	"courage",
+	"creativity",
+	"customer focus",
+	"customer obsession",
+	"decisiveness",
+	"delight",
+	"determination",
+	"discipline",
+	"diversity",
+	"education",
+	"empathy",
+	"development",
+	"ethics",
+	"excellence",
+	"factualness",
+	"fast learning",
+	"flexibility",
+	"focus",
+	"fun",
+	"global",
+	"humour",
+	"growth",
+	"hard work",
+	"health",
+	"honesty",
+	"hospitality",
+	"human",
+	"humility",
+	"idealism",
+	"impact",
+	"improvement",
+	"independence",
+	"innovation",
+	"integrity",
+	"leadership",
+	"mindfulness",
+	"open",
+	"openness",
+	"optimistic",
+	"passion",
+	"principled",
+	"professionalism",
+	"quality",
+	"quick thinking",
+	"reactive",
+	"resilience",
+	"resourceful",
+	"respect",
+	"responsibility",
+	"results oriented",
+	"self aware",
+	"sense of humour",
+	"service",
+	"simplicity",
+	"speed",
+	"sustainability",
+	"transparency",
+	"trust",
+	"versatility",
+];
+
 let oldDb = [
 	{
 		"question":
-			"Give me an example of the project or initiative that you started on your ownIt can be a non-business oneWhat prompted you to get started?✅",
+			"Give me an example of the project or initiative that you started on your own.  It can be a non-business one.  What prompted you to get started?",
 		"answer": "Cause - Customer Review Analysis being ranked 1 Star",
 		"answered": true,
-		"values": [],
+		"values": [
+			"flexibility",
+			"honesty",
+			"adaptability",
+			"creativity",
+			"hard work",
+			"innovation",
+			"passion",
+			"resourceful",
+		],
 	},
 	{
 		"question":
-			"Tell me about a time you had to work on several projects at onceHow did you handle this?✅",
+			"Tell me about a time you had to work on several projects at once. How did you handle this?",
 		"answer": "Cause - New store builds in the UK",
 		"answered": true,
-		"values": [],
+		"values": [
+			"optimistic",
+			"results oriented",
+			"sense of humour",
+			"speed",
+			"versatility",
+		],
 	},
 	{
 		"question":
