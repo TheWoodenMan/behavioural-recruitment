@@ -32,111 +32,128 @@ const questionSchema = new Schema({
 const Question = mongoose.model("Question", questionSchema);
 
 // ***************** mongodb connection **************
-// mongoose.connect(
-MongoClient.connect(
+
+const mongooseOptions = {
+	dbName: dbName,
+};
+
+mongoose.connect(
+	// MongoClient.connect(
 	dbConnectorStr,
-	{ useUnifiedTopology: true }
+	// ,{ useUnifiedTopology: true }
 	// ,{ useNewUrlParser: true }
-)
-	.then((client) => {
-		console.log(`Connected to ${dbName} database`);
-		db = client.db(dbName);
-		const questions = db.collection("questions");
+	mongooseOptions
+);
+// .then((client) => {
+// 	console.log(`Connected to ${dbName} database`);
+// 	db = client.db(dbName);
+// const questions = db.collection("questions");
 
-		// ************** DB Commands *******************
+// ************** DB Commands *******************
 
-		app.post("/addquestion", (req, res) => {
-			const body = req.body;
-			const question = {
-				question: body.question,
-				answer: body.answer,
-				answered: body.answered,
-				values: body.values,
-			};
-			questions
-				.insertOne(question)
-				.then((res) => {
-					console.log(`New Question added:`, "/n", `${question.question}`);
-					console.log(question);
-					res.send({
-						questionAdded: true,
-					});
-				})
-				.catch((error) => console.error(error));
+app.post("/addquestion", (req, res) => {
+	const body = req.body;
+	const question = new Question({
+		question: body.question,
+		answer: body.answer,
+		answered: body.answered,
+		values: body.values,
+	});
+	question
+		.save()
+		.then((res) => {
+			console.log(`New Question added:`);
+			console.log(question);
+			// console.table([
+			// 	{ key: "question", value: `${question.question}` },
+			// 	{ key: "answer", value: `${question.answer}` },
+			// 	{ key: "answered", value: `${question.answered}` },
+			// 	{ key: "values", value: `${question.values}` },
+			// ]);
+			res.json({
+				questionAdded: true,
+			});
+		})
+		.catch((error) => console.error(error));
+});
+
+app.post("/bulkaddquestion", (req, res) => {
+	const body = req.body;
+	const question = {
+		question: body.question,
+		answer: body.answer,
+		answered: body.answered,
+		values: body.values,
+	};
+	Question.insertOne(question)
+		.then((res) => {
+			console.log(`New Question added:`, "/n", `${question.question}`);
+			res.json({ response: "question added" });
+		})
+		.catch((error) => console.error(error));
+});
+
+// searches the db by id number and displays the matching document.
+app.get("/api/id/:id", (req, res) => {
+	const id = req.params.id;
+	// questions.find({id: values})
+	Question.find({ "_id": ObjectId(`${id}`) })
+		.then((results) => {
+			console.log(`{ _id : ObjectID(${id}) }`);
+			console.log(results);
+			res.json(results);
+		})
+		.catch((err) => {
+			console.log(err);
 		});
+});
 
-		app.post("/bulkaddquestion", (req, res) => {
-			const body = req.body;
-			const question = {
-				question: body.question,
-				answer: body.answer,
-				answered: body.answered,
-				values: body.values,
-			};
-			questions
-				.insertOne(question)
-				.then((res) => {
-					console.log(`New Question added:`, "/n", `${question.question}`);
-					res.json({ response: "question added" });
-				})
-				.catch((error) => console.error(error));
+// receives the object in the body and replaces the id in the params
+// with the new object.
+app.post("/api/byId/:idToReplace", (req, res) => {
+	const idToReplace = req.params.idToReplace;
+	const body = req.body;
+	// questions.find({id: values})
+	Question.find({ "_id": ObjectId(`${idToReplace}`) })
+		.replaceOne(body)
+		.then((results) => {
+			console.log(`{ _id : ObjectID(${idToReplace}) } Replaced`);
+			console.log(results);
+			res.json(results);
+		})
+		.catch((err) => {
+			console.log(err);
 		});
+});
 
-		// searches the db by id number and displays the matching document.
-		app.get("/api/id/:id", (req, res) => {
-			const id = req.params.id;
-			// questions.find({id: values})
-			questions
-				.find({ "_id": ObjectId(`${id}`) })
-				.toArray()
-				.then((results) => {
-					console.log(`{ _id : ObjectID(${id}) }`);
-					console.log(results);
-					res.json(results);
-				})
-				.catch((err) => {
-					console.log(err);
-				});
+// searches the db values arrays and displays each full record that matches
+// the leadership value search string
+app.get("/api/values/:value", (req, res) => {
+	const value = req.params.value.toLowerCase();
+	Question.find({ "values": { $all: [`${value}`] } })
+		.then((results) => {
+			console.log(results);
+			res.json(results);
+		})
+		.catch((err) => {
+			console.log(err);
 		});
+});
 
-		// searches the db values arrays and displays each full record that matches
-		// the leadership value search string
-		app.get("/api/values/:value", (req, res) => {
-			const value = req.params.value.toLowerCase();
-			questions
-				.find({ "values": { $all: [`${value}`] } })
-				.toArray()
-				.then((results) => {
-					console.log(results);
-					res.json(results);
-				})
-				.catch((err) => {
-					console.log(err);
-				});
+// Gets a random document from the db and returns only the question
+app.get("/random", (req, res) => {
+	Question
+		// pick one record at random and add to the aggregate pipeline
+		.aggregate()
+		.sample(1)
+		.then((results) => {
+			console.log(results);
+			res.json(results[0]["question"]);
+		})
+		.catch((err) => {
+			console.log(err);
 		});
-
-		// Gets a random document from the db and returns only the question
-		app.get("/random", (req, res) => {
-			questions
-				// pick one record at random and add to the aggregate pipeline
-				.aggregate([
-					{
-						$sample: {
-							size: 1,
-						},
-					},
-				])
-				.toArray()
-				.then((results) => {
-					console.log(results);
-					res.json(results[0]["question"]);
-				})
-				.catch((err) => {
-					console.log(err);
-				});
-		});
-	})
-	.catch((err) => console.log(err));
+});
 
 // *************** API Event Listeners *******************
 
@@ -201,7 +218,6 @@ let valuesArray = [
 	"integrity",
 	"leadership",
 	"mindfulness",
-	"open",
 	"openness",
 	"optimistic",
 	"passion",
@@ -258,10 +274,18 @@ let oldDb = [
 	},
 	{
 		"question":
-			"Describe a situation in which you felt you had not communicated well enoughWhat did you do? How did you handle it?",
+			"Describe a situation in which you felt you had not communicated well enough.  What did you do? How did you handle it?",
 		"answer": "answer",
 		"answered": false,
-		"values": [],
+		"values": [
+			"accountability",
+			"communication",
+			"humility",
+			"openness",
+			"responsibility",
+			"self aware",
+			"transparency",
+		],
 	},
 	{
 		"question":

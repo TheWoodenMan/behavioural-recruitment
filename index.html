@@ -9,10 +9,10 @@
 	</head>
 	<body>
 		<section>
-			<h1>Welcome to the Behavioural Questions API!</h1>
+			<h1>Welcome to the Behavioural Questions RESTful API!</h1>
 			<p>Records will be in json format:</p>
 			<code
-				>{</br> "_id": a unique ID Number,</br> "question": a String - "Question must be
+				>{</br> "_id": a unique ID Number, in BSON format allocated automatically.</br> "question": a String - "Question must be
 				in the format - Can you give me an example of a time when X? Don't be
 				tempted to lead",</br> "answer": a String - "Answer with CAR - Cause, Action,
 				Result. Don't use hypotheticals, don't generalise - think of a specific
@@ -21,29 +21,32 @@
 			</code>
 		</section>
 		<section>
-			<h2>How to access the API</h2>
-			<span>https://behavioural-recruitment.thewoodenman.repl.co/api/id/ObjectId</span></br>
-			<span>Where Number is your unique question Object Id</span></br>
-			<span>Object Ids are in the standard BSON format.</span></br>
-
+			<h2>Accessing the API</h2>
+            <h2>Return a Random Question</h2>
 			<a href="https://behavioural-recruitment.thewoodenman.repl.co/random"><span>https://behavioural-recruitment.thewoodenman.repl.co/random</span></a></br>
-			<span>for a random question!</span>
-		</section>
+
+
+            <h2>Return a Question by ObjectId</h2>
+            <span>Send a GET request to https://behavioural-recruitment.thewoodenman.repl.co/api/</span></br>
+			<span>appending the URI with /id/ObjectId </span></br>
+			<span>Where Number is your unique Object Id referring to the question you want</span></br>
+			<span>Object Ids are in the standard BSON format.</span></br>
+ 		</section>
         <section>
-            <h2>Submit a Question!</h2>
-            <p>
-                To submit a question fill out the form below.
-            </p>
-            <form action="/addquestion" method="POST">
-                <input type="text" placeholder="question" name="question"><br/>
-                <input type="text" placeholder="answer or leave blank for none" name="answer"><br/>
-                <input type="radio" id="true" name="answered">
-                <label for="true">Yes</label>
-                <input type="radio" id="false" name="answered">
-                <label for="true">No</label><br/>
-                <input type="text" placeholder="values separated by commas" name="values"><br/>
-                 <input type="submit">
-            </form>
+            <h2>
+                Submit a Question
+            </h2>
+            <span>Send a POST request to https://behavioural-recruitment.thewoodenman.repl.co/api/</span></br>
+            <span>Append the URI with /addquestion omitting the ObjectId as these will be allocated automatically, </span></br>
+            <span>Include the new question in JSON format in the body in correct format above.</span></br>
+        </section>
+        <section>
+            <h2>
+                Replace a Question
+            </h2>
+            <span>Send a POST request to https://behavioural-recruitment.thewoodenman.repl.co/api/</span></br>
+            <span>Append the URI with /api/byId/:idToReplace substituting idToReplace with the ObjectId of the target question.</span></br>
+            <span>submit your replacement question in JSON format as the body of a POST request</span></br>
         </section>
 	</body>
 </html>
