@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+        <link rel="stylesheet" href="css\style.css">
+		<script src="https://kit.fontawesome.com/e107b5abdd.js" crossorigin="anonymous"></script>
+	</head>
+	<body>
+		<section>
+			<h1>Welcome to the Behavioural Questions RESTful API Guide</h1>
+			<p>Records will be in JSON format:</p>
+			<code
+				>{</br> "_id": a unique ID Number, in BSON format allocated automatically.</br> "question": a String - "Question must be
+				in the format - Can you give me an example of a time when X? Don't be
+				tempted to lead",</br> "answer": a String - "Answer with CAR - Cause, Action,
+				Result. Don't use hypotheticals, don't generalise - think of a specific
+				example",</br> "answered": a boolean "TRUE",</br> "values": An array of strings with
+				leadership values [], </br>}
+			</code>
+		</section>
+        <nav>
+            <a href="/"><li>Behavioural Questions RESTful API Guide</li></a>
+            <a href="/list"><li>Generate a List of Behavioural Questions</li></a>
+            <a href="/newQuestion"><li>Submit a new Question to the Database</li></a>
+        </nav>
+        <h1>Submit a New Question</h1>
+        <h2>Complete the fields then click Submit </h2>
+		<p>
+			question and answer must be a string, answered is a boolean and values
+			is a series of strings separated by commas
+		</p>
+		<form action="/submitQuestion">
+			<input type="text" placeholder="question" name="question">
+			<input type="text" placeholder="answer" name="answer">
+			<input type="text" placeholder="answered" name="answered">
+			<input type="text" placeholder="values" name="values">
+			<input type="submit">
+		</form>
+		<h2>
+			Question List
+		</h2>
+		<ul class="random">
+			<% for (let i=0; i< info.length; i++) {%>
+				<li class="random">
+					<span><%= info[i].question%></span>
+					<i class="fa-solid fa-recycle"></i>
+					<i class="fa-solid fa-trash"></i>
+
+				</li>
+			<% } %>
+		</ul>
+		<script src="js/main.js"></script>
+    </body>
