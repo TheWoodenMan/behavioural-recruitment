@@ -5,11 +5,11 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Document</title>
-        <link rel="stylesheet" href="public\css\style.css">
+        <link rel="stylesheet" href="css\style.css">
 	</head>
 	<body>
 		<section>
-			<h1>Welcome to the Behavioural Questions RESTful API!</h1>
+			<h1>Welcome to the Behavioural Questions RESTful API Guide</h1>
 			<p>Records will be in JSON format:</p>
 			<code
 				>{</br> "_id": a unique ID Number, in BSON format allocated automatically.</br> "question": a String - "Question must be
@@ -20,6 +20,11 @@
 				leadership values [], </br>}
 			</code>
 		</section>
+        <nav>
+            <a href="/"><li>Behavioural Questions RESTful API Guide</li></a>
+            <a href="/list"><li>Generate a List of Behavioural Questions</li></a>
+            <a href="/newQuestion"><li>Add a new Question to the Database</li></a>
+        </nav>
 		<section>
 			<h2>Accessing the API</h2>
             <h2>Return a Random Question</h2>
@@ -53,5 +58,6 @@
             <span>replacing {id} in the URI with the ObjectId of your target question</span></br>
             <span>submit your replacement question in JSON format as the body of the POST request</span></br>
         </section>
+        <script src="js/main.js"></script>
 	</body>
 </html>

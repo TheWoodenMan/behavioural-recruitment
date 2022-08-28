@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 ObjectId = require("mongodb").ObjectId;
 require("dotenv").config();
+const ejs = require("ejs");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
@@ -51,6 +52,7 @@ mongoose.connect(
 
 // ************** DB Commands *******************
 
+// Add one question populated from the body of a POST request in JSON format
 app.post("/questions/addone", (req, res) => {
 	const body = req.body;
 	const question = new Question({
@@ -91,6 +93,26 @@ app.post("/questions/addmany", (req, res) => {
 		.then((res) => {
 			console.log(`New Question added:`, "/n", `${question.question}`);
 			res.json({ response: "question added" });
+		})
+		.catch((error) => console.error(error));
+});
+
+app.post("/submitQuestion", (req, res) => {
+	const body = req.body;
+	const question = new Question({
+		question: body.question,
+		answer: body.answer,
+		answered: body.answered,
+		values: body.values,
+	});
+	question
+		.save()
+		.then((res) => {
+			console.log(`New Question added:`);
+			console.log(question);
+			res.json({
+				questionAdded: true,
+			});
 		})
 		.catch((error) => console.error(error));
 });
@@ -157,14 +179,60 @@ app.get("/questions/random/pickone", (req, res) => {
 		});
 });
 
+app.delete("/deleteQuestion"),
+	(req, res) => {
+		console.log(res);
+		Question.deleteOne({ "question": { $question: [`${res.question}`] } })
+			.then((results) => {
+				console.log("Question Deleted");
+				res.json("Question Deleted");
+			})
+			.catch((err) => {
+				console.error(err);
+			});
+	};
+
 // *************** API Event Listeners *******************
 
 app.get("/", (req, res) => {
 	res.sendFile(__dirname + "/index.html");
 });
 
+app.get("/list", (req, res) => {
+	Question.find()
+		.then((data) => {
+			res.render(__dirname + "/list.ejs", { info: data });
+		})
+		.catch((err) => console.error(err));
+});
+
+app.get("/newQuestion", (req, res) => {
+	Question.find()
+		.then((data) => {
+			res.render(__dirname + "/newQuestion.ejs", { info: data });
+		})
+		.catch((err) => console.error(err));
+});
+
+app.get("/randomSearch", (req, res) => {
+	Question.aggregate()
+		.sample(10)
+		.then((data) => {
+			res.render(__dirname + "/list.ejs", { info: data });
+		})
+		.catch((err) => console.error(err));
+});
+
 app.get("/public", (req, res) => {
 	res.sendFile(__dirname + "/public");
+});
+
+app.get("/public/css", (req, res) => {
+	res.sendFile(__dirname + "/public/css");
+});
+
+app.get("/public/js", (req, res) => {
+	res.sendFile(__dirname + "/public/js");
 });
 
 let valuesArray = [
@@ -310,7 +378,15 @@ let oldDb = [
 			"Give me an example of a time you had to take a creative and unusual approach to solve a coding problemHow did this idea come to your mind? Why do you think it was unusual?",
 		"answer": "",
 		"answered": false,
-		"values": [],
+		"values": [
+			"adaptability",
+			"creativity",
+			"determination",
+			"flexibility",
+			"innovation",
+			"quick thinking",
+			"resourceful",
+		],
 	},
 	{
 		"question":
