@@ -182,7 +182,7 @@ app.get("/questions/random/pickone", (req, res) => {
 app.delete("/deleteQuestion"),
 	(req, res) => {
 		console.log(res);
-		Question.deleteOne({ "question": { $question: [`${res.question}`] } })
+		Question.deleteOne({ "question": { $question: [`${res}`] } })
 			.then((results) => {
 				console.log("Question Deleted");
 				res.json("Question Deleted");
@@ -221,18 +221,6 @@ app.get("/randomSearch", (req, res) => {
 			res.render(__dirname + "/list.ejs", { info: data });
 		})
 		.catch((err) => console.error(err));
-});
-
-app.get("/public", (req, res) => {
-	res.sendFile(__dirname + "/public");
-});
-
-app.get("/public/css", (req, res) => {
-	res.sendFile(__dirname + "/public/css");
-});
-
-app.get("/public/js", (req, res) => {
-	res.sendFile(__dirname + "/public/js");
 });
 
 let valuesArray = [
