@@ -32,11 +32,13 @@ async function deleteQuestion() {
 	const questionText = this.parentNode.childNodes[1].innerText;
 	console.log(questionText);
 	try {
-		await fetch("deleteQuestion", {
-			method: "DELETE",
+		const response = await fetch("deleteQuestion", {
+			method: "delete",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({ "question": questionText }),
-		}).then((response) => response.json());
+		});
+		const data = response.json();
+		console.log(data);
 		location.reload();
 	} catch (err) {
 		console.log(err);

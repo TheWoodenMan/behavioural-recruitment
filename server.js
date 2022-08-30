@@ -181,11 +181,20 @@ app.get("/questions/random/pickone", (req, res) => {
 
 app.delete("/deleteQuestion"),
 	(req, res) => {
-		console.log(res);
-		Question.deleteOne({ "question": { $question: [`${res}`] } })
-			.then((results) => {
-				console.log("Question Deleted");
-				res.json("Question Deleted");
+		let responseText;
+		const query = req.body.question;
+		console.log(query);
+		Question.deleteOne({
+			"question": `${body.question}`,
+		})
+			.then((res) => {
+				if (res.deletedCount === 1) {
+					responseText = "Successfully deleted one document.";
+				} else {
+					responseText = "No documents matched the query. Deleted 0 documents.";
+				}
+				res.json(responseText);
+				console.log(responseText);
 			})
 			.catch((err) => {
 				console.error(err);
@@ -214,8 +223,22 @@ app.get("/newQuestion", (req, res) => {
 		.catch((err) => console.error(err));
 });
 
+// randomly search 10 questions and display them.
 app.get("/randomSearch", (req, res) => {
 	Question.aggregate()
+		.sample(10)
+		.then((data) => {
+			res.render(__dirname + "/list.ejs", { info: data });
+		})
+		.catch((err) => console.error(err));
+});
+
+app.get("/valueSearch", (req, res) => {
+	body = req.query;
+	console.log(body.value);
+	Question.aggregate([
+		{ $match: { "values": { $in: [`${body.value.toLowerCase()}`] } } },
+	])
 		.sample(10)
 		.then((data) => {
 			res.render(__dirname + "/list.ejs", { info: data });
