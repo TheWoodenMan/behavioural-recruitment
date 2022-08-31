@@ -138,10 +138,34 @@ app.post("/questions/:id/replace/", (req, res) => {
 	const id = req.params.id;
 	const body = req.body;
 	// questions.find({id: values})
-	Question.find({ "_id": ObjectId(`${id}`) })
+	Question.findOne({ "_id": ObjectId(`${id}`) })
 		.replaceOne(body)
 		.then((results) => {
 			console.log(`{ _id : ObjectID(${id}) } Replaced`);
+			console.log(results);
+			res.json(results);
+		})
+		.catch((err) => {
+			console.log(err);
+		});
+});
+
+// searches for a question by id then replaces the values with the body of the request
+app.post("/questions/:id/values/replace", (req, res) => {
+	const id = req.params.id;
+	const values = req.body.values;
+	console.log(`values: ${values}`);
+	// add the document to a variable
+	// apply the new values to that document
+	// save the document and return the results.
+	const question = Question.findOne({ "_id": ObjectId(`${id}`) });
+	console.log(question);
+	question.values = values;
+
+	Question.findOne({ "_id": ObjectId(`${id}`) })
+		.replaceOne(question)
+		.then((results) => {
+			console.log(`{ _id : ObjectID(${id}) } Values updated`);
 			console.log(results);
 			res.json(results);
 		})
@@ -322,6 +346,13 @@ let valuesArray = [
 	"trust",
 	"versatility",
 ];
+
+let owo = {
+	"question": "OwO",
+	"answer": "OwO",
+	"answered": true,
+	"values": ["OwO", "OwO", "OwO", "OwO", "OwO"],
+};
 
 let oldDb = [
 	{
