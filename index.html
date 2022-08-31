@@ -10,7 +10,7 @@
 	<body>
 		<section>
 			<h1>Welcome to the Behavioural Questions RESTful API Guide</h1>
-			<p>Records will be in JSON format:</p>
+			<p>Records will be in the following JSON format:</p>
 			<code
 				>{</br> "_id": a unique ID Number, in BSON format allocated automatically.</br> "question": a String - "Question must be
 				in the format - Can you give me an example of a time when X? Don't be
@@ -57,6 +57,22 @@
             <span>Send a POST request to https://behavioural-recruitment.thewoodenman.repl.co/questions/{id}/replace</span></br>
             <span>replacing {id} in the URI with the ObjectId of your target question</span></br>
             <span>submit your replacement question in JSON format as the body of the POST request</span></br>
+        </section>
+        <section>
+            <h2>
+                Replace the values of a Question
+            </h2>
+            <span>Send a POST request to https://behavioural-recruitment.thewoodenman.repl.co/questions/{id}/values/replace</span></br>
+            <span>replacing {id} in the URI with the ObjectId of your target question</span></br>
+            <span>submit your replacement values in JSON format, but as a series of strings within an array.</span>
+            <span> as the body of the POST request</span></br>
+
+            <code>{ "values": ["optimistic",
+                "results oriented",
+                "sense of humour",
+                "speed",
+                "versatility"]
+            }</code>
         </section>
         <script src="js/main.js"></script>
 	</body>

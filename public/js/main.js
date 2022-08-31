@@ -13,7 +13,7 @@ async function replaceQuestion() {
 	const questionText = this.parentNode.childNodes[1].innerText;
 
 	try {
-		const response = await fetch("recycleSymbol", {
+		const response = await fetch("replaceQuestion", {
 			method: "replaceOne",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({
@@ -32,14 +32,12 @@ async function deleteQuestion() {
 	const questionText = this.parentNode.childNodes[1].innerText;
 	console.log(questionText);
 	try {
-		const response = await fetch("trashSymbol", {
+		const response = await fetch("deleteQuestion", {
 			method: "delete",
 			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({
-				"question": questionText,
-			}),
+			body: JSON.stringify({ "question": questionText }),
 		});
-		const data = await response.json();
+		const data = response.json();
 		console.log(data);
 		location.reload();
 	} catch (err) {

@@ -138,10 +138,34 @@ app.post("/questions/:id/replace/", (req, res) => {
 	const id = req.params.id;
 	const body = req.body;
 	// questions.find({id: values})
-	Question.find({ "_id": ObjectId(`${id}`) })
+	Question.findOne({ "_id": ObjectId(`${id}`) })
 		.replaceOne(body)
 		.then((results) => {
 			console.log(`{ _id : ObjectID(${id}) } Replaced`);
+			console.log(results);
+			res.json(results);
+		})
+		.catch((err) => {
+			console.log(err);
+		});
+});
+
+// searches for a question by id then replaces the values with the body of the request
+app.post("/questions/:id/values/replace", (req, res) => {
+	const id = req.params.id;
+	const values = req.body.values;
+	console.log(`values: ${values}`);
+	// add the document to a variable
+	// apply the new values to that document
+	// save the document and return the results.
+	const question = Question.findOne({ "_id": ObjectId(`${id}`) });
+	console.log(question);
+	question.values = values;
+
+	Question.findOne({ "_id": ObjectId(`${id}`) })
+		.replaceOne(question)
+		.then((results) => {
+			console.log(`{ _id : ObjectID(${id}) } Values updated`);
 			console.log(results);
 			res.json(results);
 		})
@@ -181,11 +205,20 @@ app.get("/questions/random/pickone", (req, res) => {
 
 app.delete("/deleteQuestion"),
 	(req, res) => {
-		console.log(res);
-		Question.deleteOne({ "question": { $question: [`${res.question}`] } })
-			.then((results) => {
-				console.log("Question Deleted");
-				res.json("Question Deleted");
+		let responseText;
+		const query = req.body.question;
+		console.log(query);
+		Question.deleteOne({
+			"question": `${body.question}`,
+		})
+			.then((res) => {
+				if (res.deletedCount === 1) {
+					responseText = "Successfully deleted one document.";
+				} else {
+					responseText = "No documents matched the query. Deleted 0 documents.";
+				}
+				res.json(responseText);
+				console.log(responseText);
 			})
 			.catch((err) => {
 				console.error(err);
@@ -214,6 +247,7 @@ app.get("/newQuestion", (req, res) => {
 		.catch((err) => console.error(err));
 });
 
+// randomly search 10 questions and display them.
 app.get("/randomSearch", (req, res) => {
 	Question.aggregate()
 		.sample(10)
@@ -223,16 +257,17 @@ app.get("/randomSearch", (req, res) => {
 		.catch((err) => console.error(err));
 });
 
-app.get("/public", (req, res) => {
-	res.sendFile(__dirname + "/public");
-});
-
-app.get("/public/css", (req, res) => {
-	res.sendFile(__dirname + "/public/css");
-});
-
-app.get("/public/js", (req, res) => {
-	res.sendFile(__dirname + "/public/js");
+app.get("/valueSearch", (req, res) => {
+	body = req.query;
+	console.log(body.value);
+	Question.aggregate([
+		{ $match: { "values": { $in: [`${body.value.toLowerCase()}`] } } },
+	])
+		.sample(10)
+		.then((data) => {
+			res.render(__dirname + "/list.ejs", { info: data });
+		})
+		.catch((err) => console.error(err));
 });
 
 let valuesArray = [
@@ -311,6 +346,13 @@ let valuesArray = [
 	"trust",
 	"versatility",
 ];
+
+let owo = {
+	"question": "OwO",
+	"answer": "OwO",
+	"answered": true,
+	"values": ["OwO", "OwO", "OwO", "OwO", "OwO"],
+};
 
 let oldDb = [
 	{
