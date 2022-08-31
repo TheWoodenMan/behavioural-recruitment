@@ -11,6 +11,6 @@ a basic app that builds a simple behavioural recruitment interview template for 
 5.  Bulk add questions
 6.  Update the leadership values of a specific question
 7.  show all questions with a given leadership value ✅
-8.  Show a selection (10x) questions randomly
-9.  Show a selection (10x) questions randomly based on a selection of leadership values
+8.  Show a selection (10x) questions randomly ✅
+9.  Show a selection (10x) questions randomly based on a leadership value ✅
 10. Make it look good
