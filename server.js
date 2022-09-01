@@ -99,6 +99,7 @@ app.post("/questions/addmany", (req, res) => {
 
 app.post("/submitQuestion", (req, res) => {
 	const body = req.body;
+	console.log(body);
 	const question = new Question({
 		question: body.question,
 		answer: body.answer,
