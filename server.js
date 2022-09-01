@@ -433,11 +433,17 @@ let oldDb = [
 	},
 	{
 		"question":
-			"Describe a situation in which you worked diligently on a project and it did not produce the desired resultsWhy didn't you get the desired results? What did you learn from the experience? ✅",
+			"Describe a situation in which you worked diligently on a project and it did not produce the desired results.  Why didn't you get the desired results? What did you learn from the experience? ✅",
 		"answer":
 			"Starfinder Character Picker - good idea, worked hard, technologically still quite naive, didn’t finish. Tech Debt Learned that I probably should have worked in a group for more value and that there is usually a better way of doing things - you just don’t know it yet. (get a second opinion if something seems laborious)",
 		"answered": true,
-		"values": [],
+		"values": [
+			"communication",
+			"determination",
+			"humility",
+			"openness",
+			"self aware",
+		],
 	},
 	{
 		"question":
