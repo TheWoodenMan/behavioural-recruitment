@@ -29,17 +29,17 @@
 		<section>
 			<h2>Accessing the API</h2>
             <h2>Return a Random Question</h2>
-			<a href="https://behavioural-recruitment-production.up.railway.app/questions/random/pickone"><span>https://behavioural-recruitment.thewoodenman.repl.co/questions/random/pickone</span></a></br>
+			<a href="https://behavioural-recruitment.thewoodenman.repl.co/questions/random/pickone"><span>https://behavioural-recruitment.thewoodenman.repl.co/questions/random/pickone</span></a></br>
         </section>
         <section>
             <h2>Return a Question by ObjectId</h2>
-            <span>Send a GET request to https://behavioural-recruitment-production.up.railway.app/questions/{id}</span></br>
+            <span>Send a GET request to https://behavioural-recruitment.thewoodenman.repl.co/questions/{id}</span></br>
 			<span>replacing {id} in the URI with the ObjectId of your target question</span></br>
 			<span>Object Ids are in the standard BSON format, you can find them specifically from other searches.</span></br>
  		</section>
          <section>
             <h2>Return a Question by a Single Value</h2>
-            <span>Send a GET request to https://behavioural-recruitment-production.up.railway.app/questions/values/{value}</span></br>
+            <span>Send a GET request to https://behavioural-recruitment.thewoodenman.repl.co/questions/values/{value}</span></br>
 			<span>replacing {value} in the URI with your target leadership value in string format</span></br>
 			<span>Object Ids are in the standard BSON format.</span></br>
  		</section>
@@ -47,7 +47,7 @@
             <h2>
                 Submit a Question
             </h2>
-            <span>Send a POST request to https://behavioural-recruitment-production.up.railway.app/questions/addone</span></br>
+            <span>Send a POST request to https://behavioural-recruitment.thewoodenman.repl.co/questions/addone</span></br>
             <span>Omit the ObjectId in the JSON as these will be allocated automatically, </span></br>
             <span>Include the new question in JSON format correctly in the format displayed above.</span></br>
         </section>
@@ -55,7 +55,7 @@
             <h2>
                 Replace a Question
             </h2>
-            <span>Send a POST request to https://behavioural-recruitment-production.up.railway.app/questions/{id}/replace</span></br>
+            <span>Send a POST request to https://behavioural-recruitment.thewoodenman.repl.co/questions/{id}/replace</span></br>
             <span>replacing {id} in the URI with the ObjectId of your target question</span></br>
             <span>submit your replacement question in JSON format as the body of the POST request</span></br>
         </section>
@@ -63,7 +63,7 @@
             <h2>
                 Replace the values of a Question
             </h2>
-            <span>Send a POST request to https://behavioural-recruitment-production.up.railway.app/questions/{id}/values/replace</span></br>
+            <span>Send a POST request to https://behavioural-recruitment.thewoodenman.repl.co/questions/{id}/values/replace</span></br>
             <span>replacing {id} in the URI with the ObjectId of your target question</span></br>
             <span>submit your replacement values in JSON format, but as a series of strings within an array.</span>
             <span> as the body of the POST request</span></br>
