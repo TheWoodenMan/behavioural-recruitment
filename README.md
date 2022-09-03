@@ -1,6 +1,6 @@
 # behavioural-recruitment
 
-a basic app that builds a simple behavioural recruitment interview template for interviewers or interviewees
+a CRUD based RESTful API that builds a simple behavioural recruitment interview template for interviewers or interviewees
 
 ## Feature wishlist
 
