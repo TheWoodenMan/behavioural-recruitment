@@ -15,4 +15,4 @@ Accessible here: https://behavioural-recruitment.thewoodenman.repl.co/
 7.  show all questions with a given leadership value ✅
 8.  Show a selection (10x) questions randomly ✅
 9.  Show a selection (10x) questions randomly based on a leadership value ✅
-10. Make it look good
+10. Make it look good ✅
