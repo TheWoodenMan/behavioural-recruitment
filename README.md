@@ -9,7 +9,7 @@ Accessible here: https://behavioural-recruitment.thewoodenman.repl.co/
 1.  Randomise a single question ✅
 2.  Pull out a particular question by Id Number ✅
 3.  Add new Questions ✅
-4.  Delete Questions
+4.  Delete Questions ✅
 5.  Bulk add questions
 6.  Update the leadership values of a specific question
 7.  show all questions with a given leadership value ✅
