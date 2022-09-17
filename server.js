@@ -7,6 +7,7 @@ ObjectId = require("mongodb").ObjectId;
 require("dotenv").config();
 const ejs = require("ejs");
 const bodyParser = require("body-parser");
+const logger = require("morgan");
 const cors = require("cors");
 
 // ************** express settings *************
@@ -15,6 +16,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use(express.json());
+app.use(logger("dev"));
 app.use(cors());
 
 let db,
@@ -36,13 +38,7 @@ const mongooseOptions = {
 	dbName: dbName,
 };
 
-mongoose.connect(
-	// MongoClient.connect(
-	dbConnectorStr,
-	// ,{ useUnifiedTopology: true }
-	// ,{ useNewUrlParser: true }
-	mongooseOptions
-);
+mongoose.connect(dbConnectorStr, mongooseOptions);
 
 // ************** DB Commands *******************
 
@@ -80,14 +76,13 @@ app.post("/questions/addmany", (req, res) => {
 
 // Express listener that turns a form request into a new question.
 app.post("/submitQuestion", (req, res) => {
-	const body = req.body;
-	console.log(body);
-	const valuesArray = body.values.join(",").map((element) => {
+	const valuesString = req.body.values;
+	const valuesArray = valuesString.split(",").map((element) => {
 		return element.trim();
 	});
 	console.log(valuesArray);
 	const question = new Question({
-		question: body.question,
+		question: req.body.question,
 		values: valuesArray,
 	});
 
@@ -187,27 +182,17 @@ app.get("/questions/random/pickone", (req, res) => {
 		});
 });
 
-app.delete("/deleteQuestion"),
-	(req, res) => {
-		let responseText;
-		const query = req.body.question;
-		console.log(query);
-		Question.deleteOne({
-			"question": `${body.question}`,
-		})
-			.then((res) => {
-				if (res.deletedCount === 1) {
-					responseText = "Successfully deleted one document.";
-				} else {
-					responseText = "No documents matched the query. Deleted 0 documents.";
-				}
-				res.json(responseText);
-				console.log(responseText);
-			})
-			.catch((err) => {
-				console.error(err);
-			});
-	};
+app.delete("/deleteQuestion", async (req, res) => {
+	console.log(`Delete: ${req.body.idFromJS}`);
+	try {
+		await Question.findOneAndDelete({ "_id": req.body.idFromJS });
+		res.json({ "report": "Deleted It" });
+		console.log("Successful");
+	} catch (err) {
+		console.log(err);
+		console.log("Failed");
+	}
+});
 
 // *************** Express listeners to render pages with EJS *******************
 

@@ -47,7 +47,7 @@
 		<ul class="random">
 			<% for (let i=0; i< info.length; i++) {%>
 				<li class="random">
-					<span><%= info[i].question%></span>
+					<span id="<%=info[i]._id%>"><%= info[i].question%></span>
 					<i class="fa-solid fa-recycle"></i>
 					<i class="fa-solid fa-trash"></i>
 

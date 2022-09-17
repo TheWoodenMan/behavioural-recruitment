@@ -14,7 +14,7 @@ async function replaceQuestion() {
 
 	try {
 		const response = await fetch("replaceQuestion", {
-			method: "replaceOne",
+			method: "post",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({
 				"question": questionText,
@@ -29,18 +29,19 @@ async function replaceQuestion() {
 }
 
 async function deleteQuestion() {
-	const questionText = this.parentNode.childNodes[1].innerText;
-	console.log(questionText);
+	const questionId = this.parentNode.childNodes[1].id;
+	console.log(this.parentNode.childNodes[1].id);
 	try {
 		const response = await fetch("deleteQuestion", {
 			method: "delete",
 			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({ "question": questionText }),
+			body: JSON.stringify({ "idFromJS": questionId }),
 		});
-		const data = response.json();
+
+		const data = await response.json();
 		console.log(data);
 		location.reload();
 	} catch (err) {
-		console.log(err);
+		throw new Error({ "error": err });
 	}
 }
