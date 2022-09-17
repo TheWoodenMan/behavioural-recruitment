@@ -16,9 +16,7 @@
 			<code
 				>{</br> "_id": a unique ID Number, in BSON format allocated automatically.</br> "question": a String - "Question must be
 				in the format - Can you give me an example of a time when X? Don't be
-				tempted to lead",</br> "answer": a String - "Answer with CAR - Cause, Action,
-				Result. Don't use hypotheticals, don't generalise - think of a specific
-				example",</br> "answered": a boolean "TRUE",</br> "values": An array of strings with
+				tempted to lead",</br> "values": An array of strings with
 				leadership values [], </br>}
 			</code>
 		</section>
@@ -33,10 +31,8 @@
 			question and answer must be a string, answered is a boolean and values
 			is a series of strings separated by commas
 		</p>
-		<form action="/submitQuestion">
+		<form action="/submitQuestion" method="POST">
 			<input type="text" placeholder="question" name="question">
-			<input type="text" placeholder="answer" name="answer">
-			<input type="text" placeholder="answered" name="answered">
 			<input type="text" placeholder="values" name="values">
 			<input type="submit">
 		</form>
