@@ -31,3 +31,14 @@ a:link {
 	color: inherit;
 	list-style: none;
 }
+
+aside {
+	display: flex;
+	flex-direction: column;
+}
+
+nav {
+	position: fixed;
+	top: 0px;
+	left: 0px;
+}

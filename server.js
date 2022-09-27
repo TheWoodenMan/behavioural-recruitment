@@ -61,17 +61,33 @@ app.post("/questions/addone", (req, res) => {
 
 // API Listener - add many questions as an array of objects
 app.post("/questions/addmany", (req, res) => {
-	const body = req.body;
-	const question = {
-		question: body.question,
-		values: body.values,
+	let returnArray = [];
+	const questionArray = req.body.array;
+
+	console.log(questionArray);
+
+	const createQuestion = (object) => {
+		// This function takes in an object and applies the objects properties to a new
+		// mongoose query outputting that.
+		return new Question({
+			question: object.question,
+			values: object.values,
+		});
 	};
-	Question.insertOne(question)
-		.then((res) => {
-			console.log(`New Question added:`, "/n", `${question.question}`);
-			res.json({ response: "question added" });
-		})
-		.catch((error) => console.error(error));
+
+	questionArray.forEach((element) => {
+		let question = createQuestion(element);
+
+		question
+			.save()
+			.then((response) => {
+				console.log(`New Question added:`, "/n", `${question.question}`);
+				console.log(response);
+				returnArray.push(question);
+			})
+			.catch((error) => console.error(error));
+	});
+	res.json(returnArray);
 });
 
 // Express listener that turns a form request into a new question.
