@@ -67,8 +67,8 @@ app.post("/questions/addmany", (req, res) => {
 	console.log(questionArray);
 
 	const createQuestion = (object) => {
-		// This function takes in an object and applies the objects properties to a new
-		// mongoose query outputting that.
+		// This helper function takes in an object as an argument and applies it's properties
+		// to a new mongoose query, creating a new Question and returning it as a response.
 		return new Question({
 			question: object.question,
 			values: object.values
@@ -81,9 +81,9 @@ app.post("/questions/addmany", (req, res) => {
 		question
 			.save()
 			.then((response) => {
-				console.log(`New Question added:`, "/n", `${question.question}`);
+				console.log(`New Question added:`, `${question.question}`);
 				console.log(response);
-				returnArray.push(question);
+				returnArray.push(response);
 			})
 			.catch((error) => console.error(error));
 	});
