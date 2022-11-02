@@ -54,6 +54,8 @@ app.post("/questions/addone", (req, res) => {
 		.then((response) => {
 			console.log(`New Question added:`);
 			console.log(question);
+			res.status(200);
+			res.send("New Question added: ");
 			res.json(response);
 		})
 		.catch((error) => console.error(error));
@@ -87,7 +89,9 @@ app.post("/questions/addmany", (req, res) => {
 			})
 			.catch((error) => console.error(error));
 	});
-	res.json(returnArray);
+	let returnObject = { "Added Questions": returnArray };
+	res.status(200);
+	res.json(returnObject);
 });
 
 // Express listener that turns a form request into a new question.
@@ -107,6 +111,7 @@ app.post("/submitQuestion", (req, res) => {
 		.then((response) => {
 			console.log(`New Question added:`);
 			console.log(question);
+			res.status(200);
 			res.json(response);
 		})
 		.catch((error) => console.error(error));
@@ -120,6 +125,7 @@ app.get("/questions/:id/", (req, res) => {
 		.then((results) => {
 			console.log(`{ _id : ObjectID(${id}) }`);
 			console.log(results);
+			res.status(200);
 			res.json(results);
 		})
 		.catch((err) => {
@@ -138,6 +144,7 @@ app.post("/questions/:id/replace/", (req, res) => {
 		.then((results) => {
 			console.log(`{ _id : ObjectID(${id}) } Replaced`);
 			console.log(results);
+			res.status(200);
 			res.json(results);
 		})
 		.catch((err) => {
@@ -162,6 +169,7 @@ app.post("/questions/:id/values/replace", (req, res) => {
 		.then((results) => {
 			console.log(`{ _id : ObjectID(${id}) } Values updated`);
 			console.log(results);
+			res.status(200);
 			res.json(results);
 		})
 		.catch((err) => {
@@ -176,6 +184,7 @@ app.get("/questions/values/:value", (req, res) => {
 	Question.find({ "values": { $all: [`${value}`] } })
 		.then((results) => {
 			console.log(results);
+			res.status(200);
 			res.json(results);
 		})
 		.catch((err) => {
@@ -191,6 +200,7 @@ app.get("/questions/random/pickone", (req, res) => {
 		.sample(1)
 		.then((results) => {
 			console.log(results);
+			res.status(200);
 			res.json(results[0]["question"]);
 		})
 		.catch((err) => {
@@ -202,6 +212,7 @@ app.delete("/deleteQuestion", async (req, res) => {
 	console.log(`Delete: ${req.body.idFromJS}`);
 	try {
 		await Question.findOneAndDelete({ "_id": req.body.idFromJS });
+		res.status(200);
 		res.json({ "report": "Deleted It" });
 		console.log("Successful");
 	} catch (err) {
