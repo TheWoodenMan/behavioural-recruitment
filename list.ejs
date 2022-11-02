@@ -31,17 +31,17 @@
             </nav>
           </aside>
         <h1>Generate a List of Behavioural Questions</h1>
-        <h2>First Choose the Leadership Values</h2>
-        <span>You can choose up to 10 Values</span>
-        <span>The API will select up to 10 Unique questions from the database tagged with your values</span>
-		<h2>
-			Search for Values
-		</h2>
+
 		<h3>Search for 10 Random Questions</h3>
+		<span>The API will select 10 random questions from the database</span>
+
 		<form action="/randomSearch">
 			<input type="submit" name="randomSearch" value="Search Now">
 		</form>
 		<h3>Search for 10 Questions by Value</h3>
+        <span>type in a leadership value to search -</span>
+        <span>The API will select up to 10 Unique questions from the database tagged with your values</span>
+
 		<form action="/valueSearch">
 			<input type="text" placeholder="value" name="value">
 			<input type="submit">
