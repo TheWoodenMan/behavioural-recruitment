@@ -9,8 +9,7 @@ Accessible here: https://behavioural-recruitment.thewoodenman.repl.co/
 ![image](https://user-images.githubusercontent.com/85075266/200978222-b12e5a75-7696-4599-9832-20bdf9919570.png)
 
 
-How It's Made:
-Tech used: HTML, CSS, JavaScript, picoCSS, node.js, express, mongoDB,
+# How It's Made:
 ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
