@@ -6,13 +6,19 @@ The API is designed to be RESTful and is aspirational - that is, I know that it 
 
 Accessible here: https://behavioural-recruitment.thewoodenman.repl.co/
 
+![image](https://user-images.githubusercontent.com/85075266/200978222-b12e5a75-7696-4599-9832-20bdf9919570.png)
+
+
 How It's Made:
 Tech used: HTML, CSS, JavaScript, picoCSS, node.js, express, mongoDB,
 
 The API was built first as a node.js/express app that serves content from a backend. I fleshed it out quite a bit to include a client with documentation and a few tools to allow fast/easy testing and demo of some of the API's functions.
 
+##Hosting
+
+Initially the API was hosted on heroku, but had to be migrated to repl.it after the service terms and conditions changed. I'm not currently 100% happy with replit's service as the API goes dormant if not in use and needs to be "woken up" which causes delays. I believe Microsoft Azure may be a better home for it and I will migrate it over as a job to do shortly.
+
 Optimizations
-(optional)
 
 I made a number of changes to the API over time, especially in getting it REST compliant. Using https://restfulapi.net/ as a guide.
 
