@@ -11,6 +11,12 @@ Accessible here: https://behavioural-recruitment.thewoodenman.repl.co/
 
 How It's Made:
 Tech used: HTML, CSS, JavaScript, picoCSS, node.js, express, mongoDB,
+![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
+![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
 
 The API was built first as a node.js/express app that serves content from a backend. I fleshed it out quite a bit to include a client with documentation and a few tools to allow fast/easy testing and demo of some of the API's functions.
 
