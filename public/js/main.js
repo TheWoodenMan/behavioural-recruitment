@@ -13,12 +13,12 @@ async function replaceQuestion() {
 	const questionText = this.parentNode.childNodes[1].innerText;
 
 	try {
-		const response = await fetch("replaceQuestion", {
+		const response = await fetch("/replaceQuestion", {
 			method: "post",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({
-				"question": questionText,
-			}),
+				"question": questionText
+			})
 		});
 		const data = await response.json();
 		console.log(data);
@@ -32,10 +32,10 @@ async function deleteQuestion() {
 	const questionId = this.parentNode.childNodes[1].id;
 	console.log(this.parentNode.childNodes[1].id);
 	try {
-		const response = await fetch("deleteQuestion", {
+		const response = await fetch("/deleteQuestion", {
 			method: "delete",
 			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({ "idFromJS": questionId }),
+			body: JSON.stringify({ "idFromJS": questionId })
 		});
 
 		const data = await response.json();
