@@ -188,7 +188,11 @@ app.get("/questions/values/:value", (req, res) => {
 			res.json(results);
 		})
 		.catch((err) => {
-			console.log(err);
+			res.status(404);
+			res.json({
+				"status": `Questions with value ${req.params.value.toLowerCase()} not found`,
+				"error": err
+			});
 		});
 });
 
@@ -204,7 +208,11 @@ app.get("/questions/random/pickone", (req, res) => {
 			res.json(results[0]["question"]);
 		})
 		.catch((err) => {
-			console.log(err);
+			res.status(404);
+			res.json({
+				"status": `Question ${req.body.idFromJS} not found`,
+				"error": err
+			});
 		});
 });
 
@@ -213,11 +221,13 @@ app.delete("/deleteQuestion", async (req, res) => {
 	try {
 		await Question.findOneAndDelete({ "_id": req.body.idFromJS });
 		res.status(200);
-		res.json({ "report": "Deleted It" });
-		console.log("Successful");
+		res.json({ "status": `Question ${req.body.idFromJS} deleted` });
 	} catch (err) {
-		console.log(err);
-		console.log("Failed");
+		res.status(404);
+		res.json({
+			"status": `Question ${req.body.idFromJS} not found`,
+			"error": err
+		});
 	}
 });
 
