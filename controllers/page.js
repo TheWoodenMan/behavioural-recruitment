@@ -1,6 +1,5 @@
-const db = require("../config/database");
-const values = require("../models/dbBackup/values.js");
-const Question = db.Question;
+const models = require("../models/Question");
+const Question = models.Question;
 
 module.exports = {
 	getIndex: (req, res) => {

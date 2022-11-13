@@ -1,21 +1,24 @@
-const db = require("../config/database");
-const Question = db.Question;
+const models = require("../models/Question");
+const Question = models.Question;
 
 module.exports = {
 	addOneQuestion: (req, res) => {
-		const body = req.body;
 		const question = new Question({
-			question: body.question,
-			values: body.values
+			question: req.body.question,
+			values: req.body.values
 		});
+
 		question
 			.save()
 			.then((response) => {
-				console.log(`New Question added:`);
-				console.log(question);
+				const resJSON = {
+					"New Question added": question.question,
+					"With Values": question.values
+				};
+				console.log(response);
+				console.log(resJSON);
 				res.status(200);
-				res.send("New Question added: ");
-				res.json(response);
+				res.json(resJSON);
 			})
 			.catch((error) => console.error(error));
 	},
@@ -25,12 +28,12 @@ module.exports = {
 
 		console.log(questionArray);
 
-		const createQuestion = (object) => {
-			// This helper function takes in an object as an argument and routerlies it's properties
+		const createQuestion = (obj) => {
+			// This helper function takes in an obj as an argument and replicates it's properties
 			// to a new mongoose query, creating a new Question and returning it as a response.
 			return new Question({
-				question: object.question,
-				values: object.values
+				question: obj.question,
+				values: obj.values
 			});
 		};
 
@@ -136,5 +139,19 @@ module.exports = {
 					"error": err
 				});
 			});
+	},
+	deleteQuestionById: async (req, res) => {
+		const id = req.params.id;
+		try {
+			await Question.findOneAndDelete({ "_id": id });
+			res.status(200);
+			res.json({ "status": `Question ${id} deleted` });
+		} catch (err) {
+			res.status(404);
+			res.json({
+				"status": `Question ${id} not found`,
+				"error": err
+			});
+		}
 	}
 };

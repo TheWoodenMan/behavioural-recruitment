@@ -1,9 +1,6 @@
 const express = require("express");
 const app = express();
-const MongoClient = require("mongodb").MongoClient;
-const mongoose = require("mongoose");
 const db = require("./config/database");
-const Question = db.Question;
 ObjectId = require("mongodb").ObjectId;
 require("dotenv").config();
 const bodyParser = require("body-parser");
