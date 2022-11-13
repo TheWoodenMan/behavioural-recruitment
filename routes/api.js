@@ -27,7 +27,7 @@ router.post(
 
 // searches the db values arrays and displays each full record that matches
 // the leadership value search string
-router.get("/questions/values/:value", apiController.getQuestionsByValue);
+router.get("/questions/value/:value", apiController.getQuestionsByValue);
 
 // Gets a number of random documents from the db and returns them
 router.get("/questions/random/:number", apiController.getRandomQuestions);
