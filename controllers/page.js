@@ -6,11 +6,13 @@ module.exports = {
 		res.render("index.ejs");
 	},
 	getQuestionForm: (req, res) => {
-		res.render("questionForm.ejs", { info: { "question": "" } });
+		res.render("questionForm.ejs", {
+			info: { "question": "" }
+		});
 	},
 	getValues: (req, res) => {
 		res.render("values.ejs", {
-			info: { "question": "", "values": values.valuesArray }
+			info: { "question": "" }
 		});
 	},
 	getRandom: (req, res) => {
