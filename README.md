@@ -46,11 +46,14 @@ Not currently implemented, but would be good to get this done with some refactor
 Not really needed for this API since we are only serving text bsaed output.
 
 # Lessons Learned:
-The first thing I learned was how easy it is to get a simple API up and running, but how difficult it is to have a *high quality* API.  Setting up the routes was quite easily but then in retrospect I wasn't thinking 100% about how good the user experience would be at that point - just to make it work. 
+The first thing I learned was how easy it is to get a simple API up and running, but how difficult it is to have a *high quality* API.  
 
-My attention to detail improved a lot after taking a "user-eye view" of the API and documentation, adding in UI optimisations and bug checking every single route possible
+Setting up the routes was quite easily but then in retrospect and after reviewing the consistency of the routes - I wasn't thinking 100% about how good the user experience would be when I first built it - I was just trying to make it work. 
 
-In the future I want to add more features, security considerations and to potentially publish it.  With a little structure and consideration the API could be useful in a recruitment context for both interviewers and interviewees.
+My attention to detail improved a lot after taking a "user-eye view" of the API and documentation, adding in UI optimisations and bug checking every single route possible - after that I added a level of consistency, so after using one part of the API - you could logically figure out how the rest of the API might behave.
+
+In the future I want to add more features, security considerations like API keys and to potentially publish it on rapidAPI. 
+With a little structure and consideration the API could be useful in a recruitment context for both interviewers and interviewees.
 
 ## Other Examples:
 Take a look at these couple examples that I have in my own portfolio:
