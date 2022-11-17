@@ -54,6 +54,7 @@ module.exports = {
 		res.json(returnObject);
 	},
 	getQuestionById: (req, res) => {
+		// route: /api/questions/{id}
 		const id = req.params.id;
 		// questions.find({id: values})
 		Question.find({ "_id": ObjectId(`${id}`) })
@@ -84,6 +85,7 @@ module.exports = {
 			});
 	},
 	replaceValuesByQuestionId: (req, res) => {
+		// route:
 		const id = req.params.id;
 		const values = req.body.values;
 		console.log(`values: ${values}`);
@@ -166,7 +168,7 @@ module.exports = {
 	},
 	getRandomQuestions: (req, res) => {
 		Question
-			// pick one record at random and add to the aggregate pipeline
+			// pick a number of records at random, add to the aggregate pipeline and return as json
 			.aggregate()
 			.sample(Number(req.params.number))
 			.then((results) => {
