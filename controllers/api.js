@@ -168,11 +168,11 @@ module.exports = {
 		Question
 			// pick one record at random and add to the aggregate pipeline
 			.aggregate()
-			.sample(req.params.number)
+			.sample(Number(req.params.number))
 			.then((results) => {
 				console.log(results);
 				res.status(200);
-				res.json(results[0]);
+				res.json({ "array": results });
 			})
 			.catch((err) => {
 				res.status(404);
