@@ -2,35 +2,55 @@ const request = require("supertest");
 const app = require("./server");
 
 describe("Load Pages", () => {
-	it("GET / should return and render index.ejs to html", async () => {
-		const res = await request(app)
+	it("GET / should return and render index.ejs to html", (done) => {
+		const res = request(app)
 			.get("/")
 			.expect("Content-Type", /text\/html/)
-			.expect(200);
+			.expect(200)
+			.end(function (err, res) {
+				if (err) return done(err);
+				return done();
+			});
 	});
-	it("GET /random should return random.ejs", async () => {
-		const res = await request(app)
+	it("GET /random should return random.ejs", (done) => {
+		const res = request(app)
 			.get("/random")
 			.expect("Content-Type", /text\/html/)
-			.expect(200);
+			.expect(200)
+			.end(function (err, res) {
+				if (err) return done(err);
+				return done();
+			});
 	});
-	it("GET /questionList should return questionList.ejs", async () => {
-		const res = await request(app)
+	it("GET /questionList should return questionList.ejs", (done) => {
+		const res = request(app)
 			.get("/questionList")
 			.expect("Content-Type", /text\/html/)
-			.expect(200);
+			.expect(200)
+			.end(function (err, res) {
+				if (err) return done(err);
+				return done();
+			});
 	});
-	it("GET /values should return values.ejs", async () => {
-		const res = await request(app)
+	it("GET /values should return values.ejs", (done) => {
+		const res = request(app)
 			.get("/values")
 			.expect("Content-Type", /text\/html/)
-			.expect(200);
+			.expect(200)
+			.end(function (err, res) {
+				if (err) return done(err);
+				return done();
+			});
 	});
-	it("GET /questionForm should return questionForm.ejs", async () => {
-		const res = await request(app)
+	it("GET /questionForm should return questionForm.ejs", (done) => {
+		const res = request(app)
 			.get("/questionForm")
 			.expect("Content-Type", /text\/html/)
-			.expect(200);
+			.expect(200)
+			.end(function (err, res) {
+				if (err) return done(err);
+				return done();
+			});
 	});
 });
 
