@@ -32,6 +32,10 @@ const pageRoutes = require("./routes/page");
 app.use("/", pageRoutes);
 app.use("/api", apiRoutes);
 
-module.exports = app.listen(process.env.PORT || 3000, () => {
+const server = app.listen(process.env.PORT || 3000, () => {
 	console.log(`Your server is listening on port ${process.env.PORT || 3000}`);
 });
+
+gracefulShutdown(server);
+
+module.exports = server;

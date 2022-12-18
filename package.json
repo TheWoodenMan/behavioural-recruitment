@@ -4,7 +4,7 @@
 	"description": "a basic app that builds a simple behavioural recruitment interview template for interviewers or interviewees",
 	"main": "server.js",
 	"scripts": {
-		"test": "jest --detectOpenHandles",
+		"test": "jest --runInBand --detectOpenHandles --forceExit",
 		"start": "node server.js",
 		"dev": "nodemon server.js"
 	},
