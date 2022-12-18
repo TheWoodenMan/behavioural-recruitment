@@ -27,7 +27,6 @@
 		"dotenv": "^16.0.1",
 		"ejs": "^3.1.8",
 		"express": "^4.18.1",
-		"http-graceful-shutdown": "^3.1.12",
 		"mongodb": "^4.9.1",
 		"mongoose": "^6.5.3",
 		"morgan": "^1.10.0",

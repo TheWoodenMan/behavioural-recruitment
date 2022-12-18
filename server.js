@@ -1,4 +1,3 @@
-const gracefulShutdown = require("http-graceful-shutdown");
 const express = require("express");
 const app = express();
 const db = require("./config/database");
@@ -32,10 +31,6 @@ const pageRoutes = require("./routes/page");
 app.use("/", pageRoutes);
 app.use("/api", apiRoutes);
 
-const server = app.listen(process.env.PORT || 3000, () => {
+module.exports = app.listen(process.env.PORT || 3000, () => {
 	console.log(`Your server is listening on port ${process.env.PORT || 3000}`);
 });
-
-gracefulShutdown(server);
-
-module.exports = server;

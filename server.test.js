@@ -1,8 +1,13 @@
 const request = require("supertest");
 const app = require("./server");
 const db = require("./config/database");
+const mongoose = require("mongoose");
 
 describe("Load Pages", () => {
+	afterAll(() => {
+		mongoose.disconnect();
+	});
+
 	test("GET / should return and render index.ejs to html", (done) => {
 		const res = request(app)
 			.get("/")
