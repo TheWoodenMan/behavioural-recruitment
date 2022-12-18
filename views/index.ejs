@@ -18,39 +18,44 @@
             <h2>Return a Number of Random Questions</h2>
             <span>Send a GET request to: <br />
                 <code>https://behavioural-recruitment.thewoodenman.repl.co/api/questions/random/:number</code></span></br>
-            <span>replacing {number} in the URI with the number of random questions you'd like to get</span></br>
+            <span>replacing <code>:number</code> in the URI with the number of random questions you'd like to get</span></br>
         </section>
         <section>
             <h2>Get a Question by ObjectId</h2>
             <span>Send a GET request to: <br />
-                <code>https://behavioural-recruitment.thewoodenman.repl.co/api/questions/{id}</code></span></br>
-			<span>replacing {id} in the URI with the ObjectId of your target question</span></br>
+                <code>https://behavioural-recruitment.thewoodenman.repl.co/api/questions/:id</code></span></br>
+			<span>replacing <code>:id</code> in the URI with the ObjectId of your target question</span></br>
 			<span>Object Ids are in the standard BSON format, you can find them specifically from other searches.</span></br>
  		</section>
          <section>
             <h2>Get a Question by a Single Value</h2>
             <span>Send a GET request to: <br />
-                <code>https://behavioural-recruitment.thewoodenman.repl.co/api/questions/value/{value}</code></span></br>
-			<span>replacing {value} in the URI with your target leadership value in string format</span></br>
+                <code>https://behavioural-recruitment.thewoodenman.repl.co/api/questions/value/:value</code></span></br>
+			<span>replacing <code>:value</code> in the URI with your target leadership value in string format</span></br>
 			<span>Object Ids are in the standard BSON format.</span></br>
  		</section>
         <section>
             <h2>
-                Submit a Question
+                Submit a New Question
             </h2>
             <span>Send a POST request to: <br />
                 <code>https://behavioural-recruitment.thewoodenman.repl.co/api/questions/addone</code></span></br>
             <span>Omit the ObjectId in the JSON as these will be allocated automatically, </span></br>
-            <span>Include the new question in JSON format correctly in the format displayed above.</span></br>
+            <span>Include the new question in JSON format correctly in the format displayed below.</span></br>
+            <code>
+                &lbrace;"question": "a String which poses the question you want to ask."
+                <br />
+                ,"values": ["An array", "of strings with", "leadership values" ]&rbrace;
+            </code>
         </section>
         <section>
             <h2>
-                Submit many Questions
+                Submit many New Questions
             </h2>
             <span>Send a POST request to: <br />
                 <code>https://behavioural-recruitment.thewoodenman.repl.co/api/questions/addmany</code></span></br>
             <span>Omit the ObjectId in the JSON as these will be allocated automatically, </span></br>
-            <span>Include the new question in JSON format correctly in a different format to the one above, specifically: </span></br>
+            <span>Include the new question in JSON format correctly in a different format to the one above, specifically like this: </span></br>
             <br>
             <pre><code>
                 { "array" :[{
@@ -70,17 +75,22 @@
                 Replace a Question
             </h2>
             <span>Send a POST request to: <br />
-                <code>https://behavioural-recruitment.thewoodenman.repl.co/api/questions/{id}/replace</code></span></br>
-            <span>replacing {id} in the URI with the ObjectId of your target question</span></br>
-            <span>submit your replacement question in JSON format as the body of the POST request</span></br>
+                <code>https://behavioural-recruitment.thewoodenman.repl.co/api/questions/:id/replace</code></span></br>
+            <span>replacing <code>:id</code> in the URI with the ObjectId of your target question</span></br>
+            <span>submit your replacement question in JSON format as the body of the POST request in the following format:</span></br>
+            <code>
+                &lbrace;"question": "a String which poses the question you want to ask."
+                <br />
+                ,"values": ["An array", "of strings with", "leadership values" ]&rbrace;
+            </code>
         </section>
         <section>
             <h2>
                 Replace the values of a Question
             </h2>
             <span>Send a POST request to: <br />
-                <code>https://behavioural-recruitment.thewoodenman.repl.co/api/questions/{id}/values/replace</code></span></br>
-            <span>replacing {id} in the URI with the ObjectId of your target question</span></br>
+                <code>https://behavioural-recruitment.thewoodenman.repl.co/api/questions/:id/values/replace</code></span></br>
+            <span>replacing <code>:id</code> in the URI with the ObjectId of your target question</span></br>
             <span>submit your replacement values in JSON format, but as a series of strings within an array.</span>
             <span> as the body of the POST request</span></br>
 
@@ -93,11 +103,22 @@
         </section>
         <section>
             <h2>
+                Add a value to the values array of a Question
+            </h2>
+            <span>Send a PATCH request to: <br />
+                <code>https://behavioural-recruitment.thewoodenman.repl.co/api/questions/:id/:value/addvalue</code></span></br>
+            <span>replacing <code>:id</code> in the URI with the ObjectId of your target question</span></br>
+            <span>and {value} in the URI with the name of the value you want to add</span></br>
+            <span>no body is needed as the request can be handled solely by parameters</span></br>
+
+        </section>   
+        <section>
+            <h2>
                 Delete a question by ObjectId
             </h2>
             <span>Send a DELETE request to: <br />
-                <code>https://behavioural-recruitment.thewoodenman.repl.co/api/questions/{id}/delete</code></span></br>
-            <span>replacing {id} in the URI with the ObjectId of your target question</span></br>
+                <code>https://behavioural-recruitment.thewoodenman.repl.co/api/questions/:id/delete</code></span></br>
+            <span>replacing <code>:id</code> in the URI with the ObjectId of your target question</span></br>
             <span>The api will target that question, delete it and either confirm or show an error</span>
 
             <code>{ "values": ["optimistic",
