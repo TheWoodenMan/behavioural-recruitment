@@ -1,57 +1,43 @@
 const request = require("supertest");
 const app = require("./server");
+const db = require("./config/database");
 
 describe("Load Pages", () => {
-	it("GET / should return and render index.ejs to html", (done) => {
+	test("GET / should return and render index.ejs to html", (done) => {
 		const res = request(app)
 			.get("/")
 			.expect("Content-Type", /text\/html/)
 			.expect(200)
-			.end(function (err, res) {
-				if (err) return done(err);
-				return done();
-			});
+			.end(done);
 	});
-	it("GET /random should return random.ejs", (done) => {
+	test("GET /random should return random.ejs", (done) => {
 		const res = request(app)
 			.get("/random")
 			.expect("Content-Type", /text\/html/)
 			.expect(200)
-			.end(function (err, res) {
-				if (err) return done(err);
-				return done();
-			});
+			.end(done);
 	});
-	it("GET /questionList should return questionList.ejs", (done) => {
+	test("GET /questionList should return questionList.ejs", (done) => {
 		const res = request(app)
 			.get("/questionList")
 			.expect("Content-Type", /text\/html/)
 			.expect(200)
-			.end(function (err, res) {
-				if (err) return done(err);
-				return done();
-			});
+			.end(done);
 	});
-	it("GET /values should return values.ejs", (done) => {
+	test("GET /values should return values.ejs", (done) => {
 		const res = request(app)
 			.get("/values")
 			.expect("Content-Type", /text\/html/)
 			.expect(200)
-			.end(function (err, res) {
-				if (err) return done(err);
-				return done();
-			});
-	});
-	it("GET /questionForm should return questionForm.ejs", (done) => {
+			.end(done);
+	}, 10000);
+	test("GET /questionForm should return questionForm.ejs", (done) => {
 		const res = request(app)
 			.get("/questionForm")
 			.expect("Content-Type", /text\/html/)
 			.expect(200)
-			.end(function (err, res) {
-				if (err) return done(err);
-				return done();
-			});
-	});
+			.end(done);
+	}, 10000);
 });
 
 describe("GET Page Functions", () => {

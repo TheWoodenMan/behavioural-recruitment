@@ -16,12 +16,8 @@ module.exports = {
 		});
 	},
 	getRandom: (req, res) => {
-		Question.aggregate()
-			.sample(10)
-			.then((data) => {
-				res.render("random.ejs", { info: data });
-			})
-			.catch((err) => console.error(err));
+		const data = "";
+		res.render("random.ejs", { info: data });
 	},
 	getQuestionList: (req, res) => {
 		Question.find()
