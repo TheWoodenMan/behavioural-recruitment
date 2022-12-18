@@ -1,7 +1,16 @@
 const request = require("supertest");
 const app = require("./server");
+const db = require("./config/database");
 
 describe("Load Pages", () => {
+	beforeAll(() => {
+		db.connectDB();
+	});
+
+	afterAll((done) => {
+		db.disconnectDB(done);
+	});
+
 	it("GET / should return and render index.ejs to html", (done) => {
 		const res = request(app)
 			.get("/")
@@ -30,7 +39,7 @@ describe("Load Pages", () => {
 			.end(function (err, res) {
 				if (err) return done(err);
 				return done();
-			});
+			}, 10000);
 	});
 	it("GET /values should return values.ejs", (done) => {
 		const res = request(app)

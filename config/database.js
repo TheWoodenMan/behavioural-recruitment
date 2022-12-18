@@ -23,4 +23,13 @@ const connectDB = async () => {
 	}
 };
 
+const disconnectDB = async () => {
+	try {
+		mongoose.disconnect();
+	} catch (err) {
+		console.error(err);
+	}
+};
+
 exports.connectDB = connectDB;
+exports.disconnectDB = disconnectDB;
