@@ -16,7 +16,7 @@ const mongooseOptions = {
 
 const connectDB = async () => {
 	try {
-		mongoose.connect(dbConnectorStr, mongooseOptions);
+		await mongoose.connect(dbConnectorStr, mongooseOptions);
 	} catch (err) {
 		console.error(err);
 	}

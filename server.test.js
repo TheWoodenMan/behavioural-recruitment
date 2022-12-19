@@ -31,7 +31,7 @@ describe("Load Pages", () => {
 			.expect("Content-Type", /text\/html/)
 			.expect(200)
 			.end(done);
-	}, 10000);
+	}, 20000);
 	test("GET /values should return values.ejs", (done) => {
 		const res = request(app.server)
 			.get("/values")
