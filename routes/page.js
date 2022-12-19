@@ -19,5 +19,6 @@ router.get("/valueSearch", pageController.getValueSearch);
 // Express listener that turns a form request into a new question.
 router.post("/submitQuestion", pageController.submitQuestion);
 router.delete("/deleteQuestion", pageController.deleteQuestion);
+router.post("/replaceQuestion", pageController.replaceQuestion);
 
 module.exports = router;

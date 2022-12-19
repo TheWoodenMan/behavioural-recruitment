@@ -81,5 +81,14 @@ module.exports = {
 				"error": err
 			});
 		}
+	},
+	replaceQuestion: (req, res) => {
+		Question.aggregate()
+			.sample(1)
+			.then((data) => {
+				console.log(data);
+				res.json({ "_id": data[0]._id, "question": data[0].question });
+			})
+			.catch((err) => console.error(err));
 	}
 };
