@@ -3,7 +3,7 @@ require("dotenv").config({ path: path.resolve(__dirname, "../config/.env") });
 const MongoClient = require("mongodb").MongoClient;
 const mongoose = require("mongoose");
 
-let dbConnectorStr = process.env.MONGO_URI,
+let dbConnectorStr = process.env.MONGO_URI || process.env["MONGO_URI"],
 	dbName = "questions";
 
 // ************** mongoose settings *************
