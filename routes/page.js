@@ -6,9 +6,9 @@ const pageController = require("../controllers/page");
 
 router.get("/", pageController.getIndex);
 router.get("/random", pageController.getRandom);
-router.get("/questionList", pageController.getQuestionList);
+// router.get("/questionList", pageController.getQuestionList);
 router.get("/values", pageController.getValues);
-router.get("/questionForm", pageController.getQuestionForm);
+// router.get("/questionForm", pageController.getQuestionForm);
 
 // randomly search up to 10 questions and display them.
 router.get("/randomSearch", pageController.getRandomSearch);

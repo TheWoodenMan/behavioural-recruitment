@@ -5,13 +5,13 @@ module.exports = {
 	getIndex: (req, res) => {
 		res.render("index.ejs");
 	},
-	getQuestionForm: (req, res) => {
-		Question.find()
-			.then((data) => {
-				res.render("questionForm.ejs", { info: data });
-			})
-			.catch((err) => console.error(err));
-	},
+	// getQuestionForm: (req, res) => {
+	// 	Question.find()
+	// 		.then((data) => {
+	// 			res.render("questionForm.ejs", { info: data });
+	// 		})
+	// 		.catch((err) => console.error(err));
+	// },
 	getValues: (req, res) => {
 		res.render("values.ejs", {
 			info: { "question": "" }
