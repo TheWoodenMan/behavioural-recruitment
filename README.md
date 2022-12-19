@@ -4,7 +4,7 @@ a CRUD based RESTful API that builds a simple behavioural recruitment interview 
 
 The API is designed to be RESTful and is aspirational - that is, I know that it isn't fully REST compliant yet, but it's well on it's way and I intend to learn a lot about REST while doing so.
 
-Accessible here: https://behavioural-recruitment.thewoodenman.repl.co/
+Accessible here: https://behavioural-recruitment-api.azurewebsites.net/
 
 ![image](https://user-images.githubusercontent.com/85075266/200978222-b12e5a75-7696-4599-9832-20bdf9919570.png)
 
@@ -21,7 +21,9 @@ The API was built first as a node.js/express app that serves content from a back
 
 ## Hosting
 
-Initially the API was hosted on heroku, but had to be migrated to repl.it after the service terms and conditions changed. I'm not currently 100% happy with replit's service as the API goes dormant if not in use and needs to be "woken up" which causes delays. I believe Microsoft Azure may be a better home for it and I will migrate it over as a job to do shortly.
+Initially the API was hosted on heroku, but had to be migrated to repl.it after the service terms and conditions changed. I'm not currently 100% happy with replit's service as the API goes dormant if not in use and needs to be "woken up" which causes delays. I believed Microsoft Azure may make a better home for it overall and begun migration.
+
+Migration to Azure posed a number of problems, the build and deploy process from github actions to azure web api was fairly complex and making sure that all the jest tests passed before deployment was a key obstacle that needed to be overcome.  
 
 Optimizations
 
@@ -51,6 +53,10 @@ The first thing I learned was how easy it is to get a simple API up and running,
 Setting up the routes was quite easily but then in retrospect and after reviewing the consistency of the routes - I wasn't thinking 100% about how good the user experience would be when I first built it - I was just trying to make it work. 
 
 My attention to detail improved a lot after taking a "user-eye view" of the API and documentation, adding in UI optimisations and bug checking every single route possible - after that I added a level of consistency, so after using one part of the API - you could logically figure out how the rest of the API might behave.
+
+The Unit and Integration tests I added to the api forced me to dramatically improve the quality of the code in order to be suitable for deployment to Azure web api.  I had to add in a handling system to the server to be able to deal with multiple connections and the JEST tests needed to be more strictly configured to gracefully disconnect mongoose and close down the server in a more elegant way.  
+
+One of the routes caused significant problems on deployment (it was pulling *every* record from the database each time it was called) which let to it being removed since it wasn't long term scaleable.
 
 In the future I want to add more features, security considerations like API keys and to potentially publish it on rapidAPI. 
 With a little structure and consideration the API could be useful in a recruitment context for both interviewers and interviewees.
