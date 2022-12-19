@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 describe("Load Pages", () => {
 	afterAll(() => {
 		mongoose.disconnect();
-		clearInterval(app.setIntervalKey);
+		// clearInterval(app.setIntervalKey);
 
 		//setTimeout(() => app.shutDown(), 3000);
 	});
@@ -39,13 +39,13 @@ describe("Load Pages", () => {
 			.expect(200)
 			.end(done);
 	}, 10000);
-	// test("GET /questionForm should return questionForm.ejs", (done) => {
-	// 	const res = request(app.server)
-	// 		.get("/questionForm")
-	// 		.expect("Content-Type", /text\/html/)
-	// 		.expect(200)
-	// 		.end(done);
-	// }, 10000);
+	test("GET /questionForm should return questionForm.ejs", (done) => {
+		const res = request(app.server)
+			.get("/questionForm")
+			.expect("Content-Type", /text\/html/)
+			.expect(200)
+			.end(done);
+	}, 10000);
 });
 
 describe("GET Page Functions", () => {

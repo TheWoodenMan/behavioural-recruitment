@@ -30,9 +30,16 @@
 			<input type="submit" />
 		</form>
 		<h2>Submitted Question</h2>
-		<section>
-			<%- include('partials/questionList.ejs') %>
-		</section>
+		<ul>
+			<%if (info._id) { %>
+			<li>
+				<span id="<%=info._id%>"><%= info.question%></span>
+				<i class="fa-solid fa-recycle">%></i>
+				<i class="fa-solid fa-trash"></i>
+				<% } %>
+			</li>
+		</ul>
+
 		<script src="js/main.js"></script>
 	</body>
 </html>

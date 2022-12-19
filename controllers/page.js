@@ -5,13 +5,9 @@ module.exports = {
 	getIndex: (req, res) => {
 		res.render("index.ejs");
 	},
-	// getQuestionForm: (req, res) => {
-	// 	Question.find()
-	// 		.then((data) => {
-	// 			res.render("questionForm.ejs", { info: data });
-	// 		})
-	// 		.catch((err) => console.error(err));
-	// },
+	getQuestionForm: (req, res) => {
+		res.render("questionForm.ejs", { info: { _id: "", question: "" } });
+	},
 	getValues: (req, res) => {
 		res.render("values.ejs", {
 			info: { "question": "" }
@@ -21,13 +17,13 @@ module.exports = {
 		const data = "";
 		res.render("random.ejs", { info: data });
 	},
-	getQuestionList: (req, res) => {
-		Question.find()
-			.then((data) => {
-				res.render("questionList.ejs", { info: data });
-			})
-			.catch((err) => console.error(err));
-	},
+	// getQuestionList: (req, res) => {
+	// 	Question.find()
+	// 		.then((data) => {
+	// 			res.render("questionList.ejs", { info: data });
+	// 		})
+	// 		.catch((err) => console.error(err));
+	// },
 	getRandomSearch: (req, res) => {
 		Question.aggregate()
 			.sample(10)
@@ -49,7 +45,9 @@ module.exports = {
 			.catch((err) => console.error(err));
 	},
 	submitQuestion: (req, res) => {
+		// This receives a comma delineated list of values and saves it to a variable
 		const valuesString = req.body.values;
+		// this takes the string and splits it into an array by comma, then trims the whitespace.
 		const valuesArray = valuesString.split(",").map((element) => {
 			return element.trim();
 		});
@@ -64,8 +62,9 @@ module.exports = {
 			.then((response) => {
 				console.log(`New Question added:`);
 				console.log(question);
+				console.log(response);
 				res.status(200);
-				res.json(response);
+				res.render("questionForm.ejs", { info: response });
 			})
 			.catch((error) => console.error(error));
 	},
