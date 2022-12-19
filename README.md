@@ -1,4 +1,4 @@
-# behavioural-recruitment
+# Behavioural Recruitment Web API
 
 a CRUD based RESTful API that builds a simple behavioural recruitment interview template for interviewers or interviewees
 
