@@ -6,38 +6,41 @@ const mongoose = require("mongoose");
 describe("Load Pages", () => {
 	afterAll(() => {
 		mongoose.disconnect();
+		clearInterval(app.setIntervalKey);
+
+		//setTimeout(() => app.shutDown(), 3000);
 	});
 
 	test("GET / should return and render index.ejs to html", (done) => {
-		const res = request(app)
+		const res = request(app.server)
 			.get("/")
 			.expect("Content-Type", /text\/html/)
 			.expect(200)
 			.end(done);
 	});
 	test("GET /random should return random.ejs", (done) => {
-		const res = request(app)
+		const res = request(app.server)
 			.get("/random")
 			.expect("Content-Type", /text\/html/)
 			.expect(200)
 			.end(done);
 	});
 	test("GET /questionList should return questionList.ejs", (done) => {
-		const res = request(app)
+		const res = request(app.server)
 			.get("/questionList")
 			.expect("Content-Type", /text\/html/)
 			.expect(200)
 			.end(done);
-	});
+	}, 10000);
 	test("GET /values should return values.ejs", (done) => {
-		const res = request(app)
+		const res = request(app.server)
 			.get("/values")
 			.expect("Content-Type", /text\/html/)
 			.expect(200)
 			.end(done);
 	}, 10000);
 	test("GET /questionForm should return questionForm.ejs", (done) => {
-		const res = request(app)
+		const res = request(app.server)
 			.get("/questionForm")
 			.expect("Content-Type", /text\/html/)
 			.expect(200)

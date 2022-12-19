@@ -31,6 +31,48 @@ const pageRoutes = require("./routes/page");
 app.use("/", pageRoutes);
 app.use("/api", apiRoutes);
 
-module.exports = app.listen(process.env.PORT || 3000, () => {
+const server = app.listen(process.env.PORT || 3000, () => {
 	console.log(`Your server is listening on port ${process.env.PORT || 3000}`);
 });
+
+const setIntervalKey = setInterval(
+	() =>
+		server.getConnections((err, connections) =>
+			console.log(`${connections} connections currently open`)
+		),
+	1000
+);
+
+process.on("SIGTERM", () => shutDown());
+process.on("SIGINT", () => shutDown());
+
+let connections = [];
+
+server.on("connection", (connection) => {
+	connections.push(connection);
+	connection.on(
+		"close",
+		() => (connections = connections.filter((curr) => curr !== connection))
+	);
+});
+
+const shutDown = function shutDown() {
+	console.log("Received kill signal, shutting down gracefully");
+	server.close(() => {
+		process.exit(0);
+	});
+
+	setTimeout(() => {
+		console.error(
+			"Could not close connections in time, forcefully shutting down"
+		);
+		process.exit(1);
+	}, 20000);
+
+	connections.forEach((curr) => curr.end());
+	setTimeout(() => connections.forEach((curr) => curr.destroy()), 5000);
+};
+
+exports.shutDown = shutDown;
+exports.server = server;
+exports.setIntervalKey = setIntervalKey;
