@@ -19,7 +19,6 @@ const connectDB = async () => {
 		mongoose.connect(dbConnectorStr, mongooseOptions);
 	} catch (err) {
 		console.error(err);
-		process.exit(1);
 	}
 };
 
