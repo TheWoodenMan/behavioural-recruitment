@@ -56,7 +56,7 @@ My attention to detail improved a lot after taking a "user-eye view" of the API 
 
 The Unit and Integration tests I added to the api forced me to dramatically improve the quality of the code in order to be suitable for deployment to Azure web api.  I had to add in a handling system to the server to be able to deal with multiple connections and the JEST tests needed to be more strictly configured to gracefully disconnect mongoose and close down the server in a more elegant way.  
 
-One of the routes caused significant problems on deployment (it was pulling *every* record from the database each time it was called) which let to it being removed since it wasn't long term scaleable.
+One of the routes caused significant problems on deployment (it was pulling *every* record from the database each time it was called) which led to it being removed since it wasn't long term scaleable.
 
 In the future I want to add more features, security considerations like API keys and to potentially publish it on rapidAPI. 
 With a little structure and consideration the API could be useful in a recruitment context for both interviewers and interviewees.
