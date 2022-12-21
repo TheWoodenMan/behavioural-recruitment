@@ -6,9 +6,6 @@ const mongoose = require("mongoose");
 describe("Load Pages", () => {
 	afterAll(() => {
 		mongoose.disconnect();
-		// clearInterval(app.setIntervalKey);
-
-		//setTimeout(() => app.shutDown(), 3000);
 	});
 
 	test("GET / should return and render index.ejs to html", (done) => {
@@ -25,13 +22,6 @@ describe("Load Pages", () => {
 			.expect(200)
 			.end(done);
 	});
-	// test("GET /questionList should return questionList.ejs", (done) => {
-	// 	const res = request(app.server)
-	// 		.get("/questionList")
-	// 		.expect("Content-Type", /text\/html/)
-	// 		.expect(200)
-	// 		.end(done);
-	// }, 20000);
 	test("GET /values should return values.ejs", (done) => {
 		const res = request(app.server)
 			.get("/values")
@@ -51,9 +41,7 @@ describe("Load Pages", () => {
 describe("GET Page Functions", () => {
 	it("GET /randomSearch should return up to 10 random records", () => {});
 	it("GET /valueSearch should return all records by a given value from form input and button push", () => {});
-	// it("GET /questionList should return questionList.ejs", () => {});
 	it("GET /values should return values.ejs", () => {});
-	// it("GET /questionForm should return questionForm.ejs", () => {});
 });
 
 describe("POST Page Functions", () => {
