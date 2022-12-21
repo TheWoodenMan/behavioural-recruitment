@@ -1,6 +1,6 @@
 # Behavioural Recruitment Web API
 
-a CRUD based RESTful API that builds a simple behavioural recruitment interview template for interviewers or interviewees
+a RESTful API with CRUD functionality that helps build a simple behavioural recruitment interview template for interviewers or interviewees
 
 The API is designed to be RESTful and is aspirational - that is, I know that it isn't fully REST compliant yet, but it's well on it's way and I intend to learn a lot about REST while doing so.
 
