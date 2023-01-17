@@ -35,14 +35,6 @@ const server = app.listen(process.env.PORT || 3000, () => {
 	console.log(`Your server is listening on port ${process.env.PORT || 3000}`);
 });
 
-// const setIntervalKey = setInterval(
-// 	() =>
-// 		server.getConnections((err, connections) =>
-// 			console.log(`${connections} connections currently open`)
-// 		),
-// 	1000
-// );
-
 process.on("SIGTERM", () => shutDown());
 process.on("SIGINT", () => shutDown());
 
@@ -75,4 +67,3 @@ const shutDown = function shutDown() {
 
 exports.shutDown = shutDown;
 exports.server = server;
-// exports.setIntervalKey = setIntervalKey;

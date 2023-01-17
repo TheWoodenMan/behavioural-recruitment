@@ -11,14 +11,9 @@ module.exports = {
 		question
 			.save()
 			.then((response) => {
-				const resJSON = {
-					"New Question added": question.question,
-					"With Values": question.values
-				};
 				console.log(response);
-				console.log(resJSON);
 				res.status(200);
-				res.json(resJSON);
+				res.json(response);
 			})
 			.catch((error) => console.error(error));
 	},

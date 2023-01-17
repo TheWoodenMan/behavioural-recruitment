@@ -6,7 +6,6 @@ const pageController = require("../controllers/page");
 
 router.get("/", pageController.getIndex);
 router.get("/random", pageController.getRandom);
-// router.get("/questionList", pageController.getQuestionList);
 router.get("/values", pageController.getValues);
 router.get("/questionForm", pageController.getQuestionForm);
 
