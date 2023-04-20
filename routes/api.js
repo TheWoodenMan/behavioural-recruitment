@@ -2,6 +2,9 @@ const express = require("express");
 const router = express.Router();
 const apiController = require("../controllers/api");
 
+// request and send back the routes for the API
+router.get("/", apiController.getAPIInfo);
+
 router.post("/questions/addone", apiController.addOneQuestion);
 router.post("/questions/addmany", apiController.addManyQuestions);
 router.get("/questions/:id/", apiController.getQuestionById);

@@ -1,7 +1,13 @@
+const { json } = require("body-parser");
 const models = require("../models/Question");
 const Question = models.Question;
+const info = require("../models/dbBackup/APIInfo");
 
 module.exports = {
+	getAPIInfo: (req, res) => {
+		res.setHeader("Content-Type", "application/json");
+		res.json(info);
+	},
 	addOneQuestion: (req, res) => {
 		const question = new Question({
 			question: req.body.question,
