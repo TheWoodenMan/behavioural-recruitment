@@ -2,7 +2,8 @@ const request = require("supertest");
 const app = require("./server");
 const db = require("./config/database");
 const mongoose = require("mongoose");
-const { response } = require("express");
+const express = require("express");
+const info = require("./models/dbBackup/APIInfo");
 
 describe("Load Pages", () => {
 	afterAll(() => {
@@ -10,28 +11,28 @@ describe("Load Pages", () => {
 	});
 
 	test("GET / should return and render index.ejs to html", (done) => {
-		const res = request(app.server)
+		const response = request(app.server)
 			.get("/")
 			.expect("Content-Type", /text\/html/)
 			.expect(200)
 			.end(done);
 	});
 	test("GET /random should return random.ejs", (done) => {
-		const res = request(app.server)
+		const response = request(app.server)
 			.get("/random")
 			.expect("Content-Type", /text\/html/)
 			.expect(200)
 			.end(done);
 	});
 	test("GET /values should return values.ejs", (done) => {
-		const res = request(app.server)
+		const response = request(app.server)
 			.get("/values")
 			.expect("Content-Type", /text\/html/)
 			.expect(200)
 			.end(done);
 	}, 10000);
 	test("GET /questionForm should return questionForm.ejs", (done) => {
-		const res = request(app.server)
+		const response = request(app.server)
 			.get("/questionForm")
 			.expect("Content-Type", /text\/html/)
 			.expect(200)
@@ -44,6 +45,7 @@ describe("GET Random Page Functions", (done) => {
 		const response = request(app.server)
 			.get("/randomSearch")
 			.expect("Content-Type", /text\/html/)
+			.expect((res) => console.log(JSON.stringify(res)))
 			.expect(200)
 			.end(function (err, res) {
 				if (err) throw err;
@@ -52,11 +54,12 @@ describe("GET Random Page Functions", (done) => {
 });
 
 describe("POST Page Functions", () => {
-	test("POST /submitQuestion with a question in the body should create a new Question documents", () => {
+	test("POST /submitQuestion with a question in the body should create a new Question document", () => {
 		const response = request(app.server)
 			.post("/submitQuestion")
-			.send({ "question": "test", "values": ["test"] })
+			.send({ "question": "test", "values": "test, test2" })
 			.expect("Content-Type", /text\/html/)
+			.expect((res) => console.log(JSON.stringify(res)))
 			.expect(200)
 			.end(function (err, res) {
 				if (err) throw err;
@@ -74,8 +77,9 @@ describe("Restricted API Calls POST", () => {
 	test("POST /api/questions/addone with JSON in the body should create a new document", () => {
 		const response = request(app.server)
 			.post("/api/questions/addone")
-			.send({ "question": "test", "values": ["test"] })
+			.send(JSON.stringify({ "question": "test", "values": "test, test2" }))
 			.expect("Content-Type", /json/)
+			.expect((res) => console.log(JSON.stringify(res)))
 			.expect(200)
 			.end(function (err, res) {
 				if (err) throw err;
@@ -83,13 +87,14 @@ describe("Restricted API Calls POST", () => {
 	});
 	test("POST /api/questions/addmany with an array of JSONs in the body should create multiple new document", () => {
 		const response = request(app.server)
-			.post("/api/questions/addone")
+			.post("/api/questions/addmany")
 			.send({
 				"array": [
 					{ "question": "test", "values": ["test"] },
 					{ "question": "test", "values": ["test"] }
 				]
 			})
+			.expect((res) => console.log(JSON.stringify(res._body)))
 			.expect("Content-Type", /json/)
 			.expect(200)
 			.end(function (err, res) {
@@ -101,11 +106,22 @@ describe("Restricted API Calls POST", () => {
 });
 
 describe("Safe API Calls GET", () => {
+	test("GET /api should return a json with a map of the API routes", function (done) {
+		const response = request(app.server);
+		response
+			.get("/api")
+			.set("Content-Type", "text/html")
+			.expect("Content-Type", /json/)
+			.expect(info)
+			.expect(200)
+			.end(done);
+	});
 	test("GET /api/questions/:id/ with an id number in the params should get that document", () => {});
 	test("GET /api/questions/value/:value with a value in the params should get all questions with that value", () => {
 		const response = request(app.server)
 			.get("/api/questions/value/test")
 			.expect("Content-Type", /json/)
+			.expect((res) => console.log(JSON.stringify(res)))
 			.expect(200)
 			.end(function (err, res) {
 				if (err) throw err;
