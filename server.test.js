@@ -1,8 +1,6 @@
 const request = require("supertest");
 const app = require("./server");
-const db = require("./config/database");
 const mongoose = require("mongoose");
-const express = require("express");
 const info = require("./models/dbBackup/APIInfo");
 
 describe("Load Pages", () => {
@@ -45,7 +43,6 @@ describe("GET Random Page Functions", (done) => {
 		const response = request(app.server)
 			.get("/randomSearch")
 			.expect("Content-Type", /text\/html/)
-			.expect((res) => console.log(JSON.stringify(res)))
 			.expect(200)
 			.end(function (err, res) {
 				if (err) throw err;
@@ -59,7 +56,6 @@ describe("POST Page Functions", () => {
 			.post("/submitQuestion")
 			.send({ "question": "test", "values": "test, test2" })
 			.expect("Content-Type", /text\/html/)
-			.expect((res) => console.log(JSON.stringify(res)))
 			.expect(200)
 			.end(function (err, res) {
 				if (err) throw err;
@@ -79,7 +75,6 @@ describe("Restricted API Calls POST", () => {
 			.post("/api/questions/addone")
 			.send(JSON.stringify({ "question": "test", "values": "test, test2" }))
 			.expect("Content-Type", /json/)
-			.expect((res) => console.log(JSON.stringify(res)))
 			.expect(200)
 			.end(function (err, res) {
 				if (err) throw err;
@@ -121,7 +116,6 @@ describe("Safe API Calls GET", () => {
 		const response = request(app.server)
 			.get("/api/questions/value/test")
 			.expect("Content-Type", /json/)
-			.expect((res) => console.log(JSON.stringify(res)))
 			.expect(200)
 			.end(function (err, res) {
 				if (err) throw err;

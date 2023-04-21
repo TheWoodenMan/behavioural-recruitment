@@ -51,13 +51,13 @@ Not currently implemented, but would be good to get this done with some refactor
 
 ## 6. Code on Demand (optional)
 
-Not really needed for this API since we are only serving text bsaed output.
+Not really needed for this API since we are only serving text based output.
 
 # Lessons Learned:
 
 The first thing I learned was how easy it is to get a simple API up and running, but how difficult it is to have a _high quality_ API.
 
-Setting up the routes was quite easily but then in retrospect and after reviewing the consistency of the routes - I wasn't thinking 100% about how good the user experience would be when I first built it - I was just trying to make it work.
+Setting up the routes was quite easy but then in retrospect and after reviewing the consistency of the routes - I wasn't thinking 100% about how good the user experience would be when I first built it - I was just trying to make it work.
 
 My attention to detail improved a lot after taking a "user-eye view" of the API and documentation, adding in UI optimisations and bug checking every single route possible - after that I added a level of consistency, so after using one part of the API - you could logically figure out how the rest of the API might behave.
 
